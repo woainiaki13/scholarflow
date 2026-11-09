@@ -6,7 +6,9 @@ Upload once to prepare study notes, evidence cards and a reference record. Eight
 
 ## Deployment
 
-This repository contains a standalone HTML/CSS/JavaScript frontend for GitHub Pages. Publish the `main` branch from `/ (root)`. Keep `.nojekyll` and the `assets/` folder together with `index.html`.
+This repository contains a standalone HTML/CSS/JavaScript frontend for GitHub Pages. Pages uses the included **Publish ScholarFlow** GitHub Actions workflow; every push to `main` publishes the static website. Keep `.nojekyll` and the `assets/` folder together with `index.html`.
+
+Live website: https://woainiaki13.github.io/scholarflow/
 
 The frontend calls the existing ScholarFlow backend at https://scholarflow-studio-ak13.xiaoxiaosu.chatgpt.site for AI processing, shared records and original files. API keys stay on the backend. GitHub Pages does not run the backend or the private Google Drive script. The backend allows the `https://woainiaki13.github.io` and previously prepared `https://lucas-hkust.github.io` frontend origins.
 
