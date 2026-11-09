@@ -1,0 +1,27 @@
+# ScholarFlow product films — credits
+
+Two English product introductions created with OpenMontage and video-shotcraft. The films use actual ScholarFlow website captures, actual completed finance-course outputs and the original course PDF supplied for the demonstration. Motion, camera moves and transitions are edited product presentation.
+
+## Music
+
+- Shotcraft edition: **Cat Walk — Arulo**. [Music source](https://assets.mixkit.co/music/371/371.mp3).
+- OpenMontage edition: **House Vibez — Lily J**. [Music source](https://assets.mixkit.co/music/745/745.mp3).
+- Music licensed under the [Mixkit Stock Music Free License](https://mixkit.co/license/#musicFree).
+
+Both editions also include a version without background music, retaining their sound effects.
+
+## Sound effects
+
+The production uses locally saved MP3 previews from Freesound. These files are released under [CC0 1.0](http://creativecommons.org/publicdomain/zero/1.0/). Source and derived-file measurements are retained with the editable projects.
+
+- [fh_Paper_Swipe_Surface1_Short_01.wav — Frank1100](https://freesound.org/people/Frank1100/sounds/147282/). Shotcraft: gain +22 dB and tail fade.
+- [Sound Design Elements Impact SFX PS 081 — AudioPapkin](https://freesound.org/people/AudioPapkin/sounds/812747/).
+- [UI Hover Micro Swish — Qvantor](https://freesound.org/people/Qvantor/sounds/878248/).
+- [computer_keyboard.wav — justinsalamon](https://freesound.org/people/justinsalamon/sounds/152586/). Shotcraft: excerpt 0.6–2.2 seconds, gain +10 dB and edge fades.
+- [Metallic_Click — BlondPanda](https://freesound.org/people/BlondPanda/sounds/778444/). Shotcraft: excerpt 0.44–0.606 seconds.
+
+## Demonstration data
+
+Lecture_8.pdf, Investments and Portfolio Analysis — Lecture 8: Arbitrage Pricing Theory, Prof. Maxime Couvert. The PDF has 61 physical pages including slide build frames. The retained run produced 15 note sections, 19 source-matched evidence cards and one source-derived reference record. Document DOI and APA formatting remain unverified. No learning gain or manual time-saving measurement is claimed.
+
+[Back to the product films](./) · [Open ScholarFlow](../)
