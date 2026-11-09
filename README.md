@@ -19,3 +19,7 @@ To reuse an existing group, preserve its full `?room=...` invitation parameter w
 Supported uploads: PDF, PPTX, TXT and Markdown, up to 50 MB per file, 300 pages/slides and 500,000 extracted characters. Long documents are split automatically. Keep the page open until processing finishes; completed parts can be resumed on the same device. Scanned pages need OCR first. Images, complex charts and speaker notes are not interpreted automatically. Unknown citation fields and ambiguous page matches remain explicit.
 
 The PDF.js and JSZip licenses are included in `assets/`.
+
+## Real course demonstration
+
+Watch the narrated automation demo at https://woainiaki13.github.io/scholarflow/demo/. It uses an actual user-supplied 61-page finance lecture: four processing parts, 15 note sections, 19 source-matched evidence cards and a source-derived reference. The course title, author and semester year are retained; DOI and APA formatting remain unverified. The demo also explains source traceability, eight-tool reuse and shared cloud records.

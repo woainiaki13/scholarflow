@@ -1,0 +1,37 @@
+WEBVTT
+
+1
+00:00:00.400 --> 00:00:10.133
+ScholarFlow turns a course upload into a shared learning resource. This demonstration uses the original finance lecture on Arbitrage Pricing Theory.
+
+2
+00:00:11.182 --> 00:00:20.536
+Choose the full sixty one page PDF on our GitHub website. One upload starts the workflow, without splitting the lecture by hand.
+
+3
+00:00:21.586 --> 00:00:32.653
+The system saves the original, reads its text, and processes four parts through Dify and our existing DeepSeek model. Processing is condensed in this animation.
+
+4
+00:00:33.703 --> 00:00:44.756
+Study notes organize the extracted material into 15 sections. This replaces repeated copying and initial formatting, while keeping the course source attached.
+
+5
+00:00:45.806 --> 00:01:00.352
+19 evidence cards preserve original quotations. Each quotation is checked against extracted source text. Unambiguous matches receive a PDF page location; uncertain locations stay explicit.
+
+6
+00:01:01.402 --> 00:01:13.045
+A reference record retains the known title, author and semester year. This lecture has no verified document DOI. APA formatting remains marked as unverified.
+
+7
+00:01:14.095 --> 00:01:23.577
+The same source can be reused across eight learning tools, from testing misconceptions and mapping evidence to checking method limits and recovering quotations.
+
+8
+00:01:24.627 --> 00:01:35.360
+Completed materials are saved to the cloud. A fresh mobile browser reads the same notes, cards and reference, so group members can use one shared library.
+
+9
+00:01:36.410 --> 00:01:50.162
+One upload, three outputs, and material the group can reuse. This observed run took about 142 seconds. Check important equations and citation details before use.
