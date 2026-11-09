@@ -1,0 +1,32 @@
+# ScholarFlow keynote — concept assets
+
+Generated with built-in OpenAI `image_gen.imagegen`; provider-managed model identifier is not exposed. Images are conceptual renderings. Production motion and real UI are composited separately.
+
+## hero-a-paper-prism.png
+
+Use case: stylized-concept.
+Asset type: cinematic 3D product-concept hero for an academic knowledge-management software launch film, landscape 16:9.
+Scene: an exquisitely lit warm ivory studio tabletop, tangible miniature architectural scale, physically plausible high-end offline 3D render. A layered stack of thin, slightly fanned ivory course-paper sheets enters the left face of ONE softly beveled, translucent lilac optical prism in the center; on the other side emerge exactly THREE distinct tactile knowledge objects: a thin elegant bound ivory notebook with subtly visible page edges, a softly rounded rectangular quotation card, and a narrow vertical citation tab. All objects blank, no text, no UI. Make the transformation legible through spatial arrangement, not arrows.
+Composition: 60-degree three-quarter overhead macro camera, long cinematic landscape frame, entire sculptural arrangement occupies about 80 percent of the frame. Main subject centered and right, only upper-left quarter remains quiet for later typography. Paper stack and outputs have substantial physical size, not tiny decorative icons. Crisp central prism and object edges, slight depth of field at far edges.
+Materials and lighting: micro paper fibers, warm matte card stock, optically convincing refraction and subtle lilac internal caustics, softly frosted acrylic edges, precise bevels, grounded contact shadows and delicate surface reflections. Broad soft side key light, restrained rear strip light. Color palette warm ivory #fffefa, warm gray #f6f5f1, charcoal #25242d, restrained lilac #8c80c8. Sophisticated, calm, premium industrial-design product photography, richly detailed and filled composition.
+Constraints: exactly one prism, one incoming course-paper stack, three clearly different outgoing objects. No letters, text, numbers, logos, watermarks, computer screens, fake app UI, people, neon, magical particles, decorative floating spheres, arrows or flat infographic treatment. This is an original conceptual product rendering, not a literal software interface.
+
+## hero-b-source-thread.png
+
+Use case: stylized-concept.
+Asset type: second cinematic 3D product-concept asset for ScholarFlow's launch film, 16:9 landscape.
+Input image1 is a MATERIAL AND LIGHTING REFERENCE only: preserve its tactile ivory paper, beveled optically refractive lilac acrylic and premium physical plausibility, but create a completely new dark macro composition.
+Scene: deep charcoal studio environment #25242d with the camera extremely close to the contact region between one ivory source-paper sheet on the left and one thick rounded blank quotation card on the right. A single fine optical lilac filament physically spans between a precise point on the source sheet and the near edge of the quotation card. A fragment of softly beveled translucent lilac prism can be seen behind the contact point, refracting the filament in a controlled way. This represents evidence linked back to its original source.
+Composition: dramatic three-quarter true macro, filled frame; the contact point and card occupy80percent of the image, source sheet enters from lower left, blank quote-card surface in right half remains clearly visible for later actual text compositing. Rich depth, one unmistakable source-to-card connection. Not an infographic, no arrows. Slight depth of field, central filament contact point tack sharp.
+Lighting/materials: single restrained lilac strip reflection and a large soft ivory side key reveal paper fibers and frosted acrylic bevels; grounded contact shadows; tiny physically plausible caustics on charcoal surface. Controlled contrast, charcoal blacks retain tactile detail. Ivory #fffefa and muted lilac #8c80c8; no neon.
+Constraints: no text, letters, numbers, logos, watermarks, screens, fake UI, faces, decorative particles, floating spheres, extra cards or multiple filaments. Blank surfaces, original concept rendering. Do not repeat the wide paper-stack-to-book composition.
+
+## hero-c-shared-plane.png
+
+Use case: stylized-concept.
+Asset type: third cinematic 3D product-concept asset for ScholarFlow academic group sharing, 16:9 landscape.
+Input image1 is a MATERIAL AND LIGHTING REFERENCE only. Preserve its warm ivory paper, muted lilac refractive acrylic, believable bevels, subtle caustics and tactile high-end industrial design, but make a completely different scene about a single shared learning space.
+Scene: warm ivory studio floor. Exactly THREE distinct blank thin learning surfaces sit together, linked physically by ONE coherent translucent lilac refractive plane underneath and between them. One broad gently tilted landscape panel at back-left (desktop-like, no keyboard); one medium portrait card in front-center; one smaller tall slim rounded panel on the right (phone-like, no hardware logos, no notch detail). These are abstract physical surfaces, not a literal hardware product advertisement. Their blank ivory faces should be clear, planar and stable enough for actual website captures to be composited later.
+Composition: shallow low-angle three-quarter product camera at tabletop height, filled premium frame; shared plane and three surfaces occupy80percent of the frame with overlapping depth, strong grounded shadows, sculptural but calm arrangement. Keep all three major faces visible without oblique extreme foreshortening. Use subtle depth of field in far background, product faces remain sharp. Not floating tiny rectangles in a huge void.
+Lighting and materials: large soft overhead-side key, soft rear strip, microtextured matte paper/ceramic ivory faces #fffefa, precise thin charcoal #25242d edges, one optically convincing lilac #8c80c8 beveled glass-like shared plane. Restrained caustics and contact shadows across warm gray #f6f5f1 floor, delicate reflections, no neon. Original physical metaphor for synchronized shared study material.
+Constraints: exactly three blank surfaces on one coherent shared plane. No text, letters, numbers, logos, watermarks, fake UI, buttons, people, globes, wireless icons, floating particles, decorative spheres or arrows. Do not copy any recognizable branded device silhouette. Do not repeat the paper-stack/prism/book composition.
