@@ -2,7 +2,7 @@
 
 An automated academic workspace for shared course materials, source-matched evidence and reusable learning activities.
 
-Upload once to prepare study notes, evidence cards and a reference record. Eight tools support misconception reflection, concept reconstruction, evidence mapping, assignment checking, method boundaries, replication outlines, version impact and quotation recovery.
+Follow one material through a connected learning path: upload → automatic learning pack → shared learning goal → focused practice → reusable group outcome. Eight tools serve the goal when needed. New runs send only the selected source and retain source, goal and explicit parent-run links. Each source keeps separate private drafts. Shared goals, results and saved reflections use the existing cloud storage.
 
 ## Deployment
 
@@ -22,4 +22,4 @@ The PDF.js and JSZip licenses are included in `assets/`.
 
 ## Real course demonstration
 
-Watch the narrated automation demo at https://woainiaki13.github.io/scholarflow/demo/. It uses an actual user-supplied 61-page finance lecture: four processing parts, 15 note sections, 19 source-matched evidence cards and a source-derived reference. The course title, author and semester year are retained; DOI and APA formatting remain unverified. The demo also explains source traceability, eight-tool reuse and shared cloud records.
+Watch the product film at https://woainiaki13.github.io/scholarflow/demo/. It uses an actual user-supplied 61-page finance lecture: four processing parts, 15 note sections, 19 source-matched evidence cards and a source-derived reference. The course title, author and semester year are retained; DOI and APA formatting remain unverified. The demo also explains source traceability, eight-tool reuse and shared cloud records.
