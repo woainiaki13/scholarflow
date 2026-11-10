@@ -2,7 +2,7 @@
 
 An automated academic workspace for shared course materials, source-matched evidence and reusable learning activities.
 
-Follow one material through a connected learning path: upload → automatic learning pack → shared learning goal → focused practice → reusable group outcome. Eight tools serve the goal when needed. New runs send only the selected source and retain source, goal and explicit parent-run links. Each source keeps separate private drafts. Shared goals, results and saved reflections use the existing cloud storage.
+Start with one material and one useful task: upload → automatic learning pack → explain one idea → inspect the original → save a revised understanding. The prominent **Start revising this lecture** button opens the real guided task; other tools remain available as optional actions. New runs use only the selected source and retain source, goal and explicit parent-run links. Drafts stay private. Completed results, saved reflections and student-entered study sessions use the existing shared cloud storage.
 
 ## Deployment
 
@@ -23,3 +23,13 @@ The PDF.js and JSZip licenses are included in `assets/`.
 ## Real course demonstration
 
 Watch the product film at https://woainiaki13.github.io/scholarflow/demo/. It uses an actual user-supplied 61-page finance lecture: four processing parts, 15 note sections, 19 source-matched evidence cards and a source-derived reference. The course title, author and semester year are retained; DOI and APA formatting remain unverified. The demo also explains source traceability, eight-tool reuse and shared cloud records.
+
+## Task guide and factual use records
+
+The first-use walkthrough follows a real revision task rather than introducing every tool. No model runs until the learner submits their own explanation. Study-session records accept the actual task, date, contributor, optional measured minutes and self-written issues or changes. Blank time fields remain unmeasured, not zero. Each saved session is a separate shared history record; unsubmitted session drafts stay local. Export factual records from **Record this study session**.
+
+**Share group → Refresh display cache** reloads the interface and resets walkthrough progress while keeping sources, completed history, private drafts and unsent writes. This is a targeted interface refresh, not deletion of group data or all browser storage.
+
+Evidence-card locations are rechecked against the full retained page map after all processing parts are merged. Saved packs with retained source maps are also rechecked on load. Repeated quotations show candidate pages instead of being labelled unique. A later audit found finance card C014 occurs on PDF pages 33 and 36; the earlier historical report's 16 unique assignments overstated global uniqueness. Original raw reports are retained; the supported full-document count is 15 single-page candidates and four multi-page candidates.
+
+Technical details: [Chinese update note](docs/task-guide-update.md). These features record students' own experience; they do not generate final assessment analysis, establish learning gains or replace the course's GenAI declaration.

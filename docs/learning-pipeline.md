@@ -81,3 +81,11 @@
 - [隔离网页验证记录](pipeline-verification/Verification.json)
 - [桌面学习主线](pipeline-verification/Pipeline_Desktop_Path.png)
 - [手机学习主线](pipeline-verification/Pipeline_Mobile_Path.png)
+
+## 任务式入门与使用记录补充
+
+当前首页以 **Start revising this lecture** 引导一次真实练习：从当前学习包选择问题、自己解释、提交反馈、回原文检查，再手写保存修正后的理解。七个其他工具保留在可选入口。资料下方新增学生亲自填写的使用记录，未测量时间不当作零；完成记录按独立 ID 小组同步，未提交草稿留在本地。
+
+本轮也修正了跨分段重复摘录的页码问题。合并学习包及读取旧学习包时，用整份来源重新匹配；多个候选不标为唯一页码。原金融演示 C014 实际候选为物理 PDF 第33和36页，历史记录中16张唯一页码应更正为15张单页候选、4张多页候选。原始运行日志和录像保留不改。
+
+定向刷新入口位于 **Share group → Refresh display cache**，保留资料、历史、未提交草稿和待同步写入。Google Drive 的独立通道边界保持原状。完整技术说明见 [任务式入门更新](task-guide-update.md)。
