@@ -33,3 +33,9 @@ The first-use walkthrough follows a real revision task rather than introducing e
 Evidence-card locations are rechecked against the full retained page map after all processing parts are merged. Saved packs with retained source maps are also rechecked on load. Repeated quotations show candidate pages instead of being labelled unique. A later audit found finance card C014 occurs on PDF pages 33 and 36; the earlier historical report's 16 unique assignments overstated global uniqueness. Original raw reports are retained; the supported full-document count is 15 single-page candidates and four multi-page candidates.
 
 Technical details: [Chinese update note](docs/task-guide-update.md). These features record students' own experience; they do not generate final assessment analysis, establish learning gains or replace the course's GenAI declaration.
+
+## Clearer first task
+
+Start with **Check my understanding** for the selected lecture. Write an explanation, request feedback, open the original passage and save your own revision. **Study notes**, **Evidence cards** and **Source reference** open the corresponding part of the existing learning pack. Other tasks describe the input they need and the result they return.
+
+The 14 November update moves this task into the first mobile screen, preserves source-derived question starters during navigation and gives each learning-pack output an exact destination. Existing group records, private drafts and model connections are retained. See [the update note](docs/usability-update.md).
