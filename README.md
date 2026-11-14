@@ -43,3 +43,9 @@ Technical details: [Chinese update note](docs/task-guide-update.md). These featu
 Start with **Check my understanding** for the selected lecture. Write an explanation, request feedback, open the original passage and save your own revision. **Study notes**, **Evidence cards** and **Source reference** open the corresponding part of the existing learning pack. Other tasks describe the input they need and the result they return.
 
 The 14 November update moves this task into the first mobile screen, preserves source-derived question starters during navigation and gives each learning-pack output an exact destination. Existing group records, private drafts and model connections are retained. See [the update note](docs/usability-update.md).
+
+## Changing an explanation and connecting ideas
+
+In **Check my understanding**, enter a new name under **Check another concept** and choose **Start this concept**. For example, after checking IPO, start Investment banking and write its definition in **My explanation**. Earlier checks remain in history; unfinished explanations are kept as private drafts for their question. You can also choose a saved concept and select **Use this concept**. To revise the current explanation, edit it and select **Check my edited explanation**; the new check is a separate saved run.
+
+**Connect ideas** loads concept labels from the current material's saved learning pack when this device has no concept draft. Choose a starting idea in **From** and a related idea in **To**, describe their relationship and conditions, then select **Add this connection**. Repeat for other pairs and select **Check my connections** for source-grounded feedback. Dragging changes the arrangement. If no saved terms exist, the selectors explain that concepts must first be generated. Generating a new list replaces the current canvas and connections.
