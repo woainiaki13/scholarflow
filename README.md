@@ -2,7 +2,7 @@
 
 An automated academic workspace for shared course materials, source-matched evidence and reusable learning activities.
 
-Start with one material and one useful task: upload → automatic learning pack → explain one idea → inspect the original → save a revised understanding. The prominent **Start revising this lecture** button opens the real guided task; other tools remain available as optional actions. New runs use only the selected source and retain source, goal and explicit parent-run links. Drafts stay private. Completed results, saved reflections and student-entered study sessions use the existing shared cloud storage.
+Start with one material and one useful task: upload → automatic learning pack → explain one idea → inspect the original → save a revised understanding. The prominent **Check my understanding** button opens the real guided task; other tools remain available as optional actions. New runs use only the selected source and retain source, goal and explicit parent-run links. Drafts stay private. Completed results, saved reflections and student-entered study sessions use the existing shared cloud storage.
 
 ## Deployment
 
@@ -19,6 +19,10 @@ To reuse an existing group, preserve its full `?room=...` invitation parameter w
 Supported uploads: PDF, PPTX, TXT and Markdown, up to 50 MB per file, 300 pages/slides and 500,000 extracted characters. Long documents are split automatically. Keep the page open until processing finishes; completed parts can be resumed on the same device. Scanned pages need OCR first. Images, complex charts and speaker notes are not interpreted automatically. Unknown citation fields and ambiguous page matches remain explicit.
 
 The PDF.js and JSZip licenses are included in `assets/`.
+
+Use the GitHub Pages group invitation for normal study. PDF.js, its worker and the PowerPoint ZIP reader load from this GitHub repository. A reader-loading failure happens before the original is uploaded or Dify starts. Reload the GitHub page and select the file again. Dify run-log advice appears when a processing request has actually been submitted; completed parts remain available on the same device.
+
+The backend remains a separate service. A platform block on `chatgpt.site` can affect its APIs even when GitHub assets load successfully; changing a PDF or clearing group records does not resolve that block.
 
 ## Real course demonstration
 

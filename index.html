@@ -271,11 +271,12 @@ function mergeIntakePacks(parts,job){
 
 let pdfReaderModule,zipReaderPromise;
 function vendorURL(name){return new URL('assets/'+name,location.href.split('#')[0]).href;}
+function readerLoadError(format){return new Error('The '+format+' reader could not load from this website. Reload the page and select the file again. If you opened an older link, use the GitHub study workspace.');}
 async function readCourseDocument(file,onProgress){
  const extension=file.name.split('.').at(-1).toLowerCase();
  if(extension==='pdf'){
-  pdfReaderModule=pdfReaderModule||await import(vendorURL('pdf.min.mjs'));pdfReaderModule.GlobalWorkerOptions.workerSrc=vendorURL('pdf.worker.min.mjs');
-  let pdf;try{pdf=await pdfReaderModule.getDocument({data:new Uint8Array(await file.arrayBuffer()),isEvalSupported:false,useSystemFonts:true}).promise;}catch(error){if(error.name==='PasswordException')throw new Error('This PDF needs a password. Upload an unlocked copy.');throw new Error('The PDF could not be read. Re-export it as a text-based PDF.');}
+  try{pdfReaderModule=pdfReaderModule||await import(vendorURL('pdf.min.mjs'));pdfReaderModule.GlobalWorkerOptions.workerSrc=vendorURL('pdf.worker.min.mjs');}catch{throw readerLoadError('PDF');}
+  let pdf;try{pdf=await pdfReaderModule.getDocument({data:new Uint8Array(await file.arrayBuffer()),isEvalSupported:false,useSystemFonts:true}).promise;}catch(error){if(error.name==='PasswordException')throw new Error('This PDF needs a password. Upload an unlocked copy.');if(error.message?.includes('Setting up fake worker failed'))throw readerLoadError('PDF');throw new Error('The PDF could not be read. Re-export it as a text-based PDF.');}
   try{if(pdf.numPages>INTAKE_LIMITS.pages)throw new Error('This PDF has '+pdf.numPages+' pages. The current limit is 300; split it into course units.');const pages=[];
    for(let n=1;n<=pdf.numPages;n++){onProgress('Reading page '+n+' of '+pdf.numPages);const page=await pdf.getPage(n),content=await page.getTextContent();pages.push({page:n,text:content.items.map(x=>x.str+(x.hasEOL?'\n':' ')).join('').trim()});page.cleanup();}
    const prepared=prepareIntake(pages,'PDF page'),metadata=await pdf.getMetadata();
@@ -284,7 +285,7 @@ async function readCourseDocument(file,onProgress){
   }finally{await pdf.destroy();}
  }
  if(extension==='pptx'){
-  if(!globalThis.JSZip){zipReaderPromise=zipReaderPromise||new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=vendorURL('jszip.min.js');s.onload=resolve;s.onerror=()=>reject(new Error('The PowerPoint reader could not load. Refresh and retry.'));document.head.append(s);});await zipReaderPromise;}
+  if(!globalThis.JSZip){zipReaderPromise=zipReaderPromise||new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=vendorURL('jszip.min.js');s.onload=resolve;s.onerror=()=>{s.remove();zipReaderPromise=undefined;reject(readerLoadError('PowerPoint'));};document.head.append(s);});await zipReaderPromise;if(!globalThis.JSZip)throw readerLoadError('PowerPoint');}
   const zip=await JSZip.loadAsync(await file.arrayBuffer()),xml=new DOMParser(),presentation=zip.file('ppt/presentation.xml'),rels=zip.file('ppt/_rels/presentation.xml.rels');
   if(!presentation||!rels)throw new Error('This is not a readable PPTX file. Export it to PDF and retry.');
   const relationships=xml.parseFromString(await rels.async('string'),'application/xml'),targets=new Map([...relationships.getElementsByTagName('Relationship')].map(r=>[r.getAttribute('Id'),r.getAttribute('Target')]));
@@ -334,6 +335,7 @@ async function responseJSON(response){let data;try{data=await response.json();}c
 async function processIntakeQueue(){
  if(intakeBusy)return;intakeBusy=true;let job;
  while((job=state.intakeJobs.find(j=>j.status==='queued'))){
+  let difyRequested=false;
   job.status='processing';job.error='';save();intakeQueue();
   try{
    let draft=state.intakeDrafts[job.id];
@@ -344,7 +346,7 @@ async function processIntakeQueue(){
    for(let index=draft.results.length;index<draft.prepared.segments.length;index++){
     const part=draft.prepared.segments[index];job.phase='Automatically processing part '+(index+1)+' of '+job.parts_total+' · notes, evidence and reference';intakeQueue();
     const body=new FormData();body.set('file',new File([intakeSegmentText(draft.prepared,part)],job.name.replace(/\.[^.]+$/,'')+'-part-'+(index+1)+'.txt',{type:'text/plain'}));body.set('source_id',job.source_id+'-P'+String(index+1).padStart(2,'0'));body.set('source_title',job.name);body.set('project',job.project);body.set('source_url',job.original_url);
-    const data=await responseJSON(await apiFetch('/api/ingest',{method:'POST',headers:groupHeaders(),body}));locatePackCards(data.pack,intakeSegmentPages(draft.prepared,part));draft.results.push({pack:data.pack,notes_markdown:data.notes_markdown,run_id:data.run_id});job.parts_done=draft.results.length;save();intakeQueue();
+    difyRequested=true;const data=await responseJSON(await apiFetch('/api/ingest',{method:'POST',headers:groupHeaders(),body}));locatePackCards(data.pack,intakeSegmentPages(draft.prepared,part));draft.results.push({pack:data.pack,notes_markdown:data.notes_markdown,run_id:data.run_id});job.parts_done=draft.results.length;save();intakeQueue();
    }
    job.pack=mergeIntakePacks(draft.results,job);locatePackCards(job.pack,draft.prepared.page_map.map(p=>({...p,text:draft.prepared.text.slice(p.start,p.end)})));job.notes_markdown=draft.results.map((r,i)=>'# Part '+(i+1)+'\n\n'+(r.notes_markdown||'')).join('\n\n');job.run_ids=draft.results.map(r=>r.run_id);job.completed_at=new Date().toISOString();job.phase='All parts processed · saved to your shared library';job.status='completed';
    const prepared=draft.prepared;const source={id:job.source_id,title:job.name,project:job.project,text:prepared.text,url:job.url||job.original_url,original_url:job.original_url,page_map:prepared.page_map,page_count:prepared.page_count,author:job.author};if(!state.sources.some(s=>s.id===source.id))state.sources.push(source);
@@ -352,7 +354,7 @@ async function processIntakeQueue(){
    state.learningDrafts=state.learningDrafts||{};state.learningDrafts[source.id]=state.learningDrafts[source.id]||{forms:concepts[0]?{misconceptions:{question:'Explain '+concepts[0]+' and the conditions under which it applies.',answer:'',confidence:50}}:{},concepts,connections:[]};
    if(typeof selectLearningSource==='function')selectLearningSource(source.id);
    delete state.intakeDrafts[job.id];save();if(!busy)render();else if(typeof renderLearningPath==='function')renderLearningPath();intakeQueue();showPack(job.id);
-  }catch(error){job.status='failed';job.error=error.message+' Completed parts are kept on this device. If a part timed out, check its Dify run log before resuming.';save();intakeQueue();}
+  }catch(error){job.status='failed';job.error=error.message+(difyRequested?' '+(job.parts_done?'Completed parts are kept on this device. ':'')+'If this part timed out, check its Dify run log before resuming.':' No Dify processing was started. Select the file again after fixing the connection or file issue.');save();intakeQueue();}
   finally{pendingIntake.delete(job.id);}
  }intakeBusy=false;toast('Processing queue finished. Open completed learning packs below.');
 }
