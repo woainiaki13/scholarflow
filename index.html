@@ -11,9 +11,9 @@ dialog{border:1px solid #dfd8e7;padding:0;border-radius:17px;background:var(--pa
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style></head><body>
 <div class="route-progress" id="route-progress" aria-hidden="true"><i></i></div><div class="sr-only" id="page-announcement" role="status" aria-live="polite"></div><div class="app">
-<aside class="sidebar"><a class="brand" href="#misconceptions"><span class="brandmark"><i></i><i></i><i></i><i></i></span>ScholarFlow</a><div class="edition">THE LEARNING STUDIO</div><div class="nav-caption">EIGHT WAYS TO WORK</div><nav class="tool-nav" id="tool-nav" aria-label="Learning and research tools"><div class="nav-indicator" id="nav-indicator" aria-hidden="true"></div></nav><div class="sidebar-footer"><div class="source-count"><span>Current sources</span><b id="source-count">—</b></div><button class="side-link" data-action="sources"><span data-icon="folder"></span>Manage sources</button><button class="side-link" data-action="backup"><span data-icon="download"></span>Export workspace backup</button><label class="side-link upload-label" style="margin:0"><span data-icon="upload"></span>Import backup / Dify Results<input id="import-file" type="file" accept=".json" hidden></label><a class="side-link" href="https://udify.app/workflow/ZqNbhoeowQk9E2mf" target="_blank" rel="noopener"><span data-icon="external"></span>Process a PDF in Dify</a></div></aside>
+<aside class="sidebar"><a class="brand" href="#misconceptions"><span class="brandmark"><i></i><i></i><i></i><i></i></span>ScholarFlow</a><div class="edition">THE LEARNING STUDIO</div><div class="nav-caption">EIGHT WAYS TO WORK</div><nav class="tool-nav" id="tool-nav" aria-label="Learning and research tools"><div class="nav-indicator" id="nav-indicator" aria-hidden="true"></div></nav><div class="sidebar-footer"><div class="source-count"><span>Current sources</span><b id="source-count">—</b></div><button class="side-link" data-action="sources"><span data-icon="folder"></span>Manage sources</button><button class="side-link" data-action="backup"><span data-icon="download"></span>Export workspace backup</button><label class="side-link upload-label" style="margin:0"><span data-icon="upload"></span>Restore a backup<input id="import-file" type="file" accept=".json" hidden></label><a class="side-link" href="https://udify.app/workflow/ZqNbhoeowQk9E2mf" target="_blank" rel="noopener"><span data-icon="external"></span>Process a PDF in Dify</a></div></aside>
 <div class="content"><header class="topbar"><div class="breadcrumb"><span>Group learning space</span><span>/</span><strong id="crumb">Learning Practice</strong></div><div class="top-actions"><div class="status" id="connection">Checking connection</div><button class="outline-btn" data-action="sources"><span data-icon="plus"></span>Add material</button><button class="outline-btn" data-action="backup"><span data-icon="download"></span>Export</button><span class="avatar">S</span></div></header><section class="intro"><div class="tool-emblem" id="tool-emblem"></div><div><div class="kicker" id="kicker"></div><h1 id="page-title"></h1><p id="subtitle"></p></div><div class="page-index"><b id="page-number">01</b> / 08</div></section><div class="workspace"><main class="workspace-main"><div id="error-slot"></div><div id="view"></div><section class="card hidden" id="result-section" aria-live="polite"><div id="result-content"></div></section><section class="card" id="history"></section></main><aside class="workspace-aside" id="context"></aside></div><footer class="footer"><span id="save-label">Connecting to your group workspace…</span><span><button class="text-btn" data-action="sources" style="font-size:9px">Source settings</button> &nbsp; / &nbsp; <a href="https://drive.google.com/drive/folders/1IPblE9ZC_6IiH-CdPrVK0I8D5z97-Csd" target="_blank" rel="noopener">Open Google Drive ↗</a></span></footer></div>
-</div><div class="action-dock" id="tool-dock"><div class="dock-copy"><strong id="dock-title"></strong><span id="dock-detail"></span></div><div class="dock-actions"><span class="dock-counter" id="dock-counter"></span><button class="outline-btn" data-action="sources">Browse sources</button><button class="primary" id="run-button" data-action="run"></button></div></div><dialog id="sources-modal"><div class="modal-head"><h2>Materials & sources</h2><button aria-label="Close materials window" data-close="sources-modal">×</button></div><div class="modal-body"><p class="hint">All eight tools share your group sources. Upload PDFs with Upload & automate, paste text here, or import a ScholarFlow JSON result. The owner’s private Google Drive archive is separate from this group. </p><div class="modal-actions" style="justify-content:flex-start;margin-bottom:18px"><button class="outline-btn" data-action="backup">Export backup</button><label class="outline-btn upload-label">Import backup / Dify JSON<input id="import-file-modal" type="file" accept=".json" hidden></label></div><div id="source-list"></div><div class="field"><label for="new-title">Material title</label><input id="new-title" placeholder="e.g., Statistics lesson 3 lecture"></div><div class="form-row"><div class="field"><label for="new-id">Source ID (unique)</label><input id="new-id" placeholder="STAT-002"></div><div class="field"><label for="new-url">Original link (optional)</label><input id="new-url" type="url" placeholder="https://drive.google.com/…"></div></div><div class="field"><label for="new-text">Material text</label><textarea id="new-text" rows="6" placeholder="Paste searchable original text. Page numbers are not guessed when unclear."></textarea></div><div class="modal-actions"><label class="outline-btn upload-label"><span data-icon="upload"></span>Select TXT / MD<input type="file" id="source-file" accept=".txt,.md" hidden></label><button class="primary" data-action="add-source">Save material<span data-icon="arrow"></span></button></div></div></dialog>
+</div><div class="action-dock" id="tool-dock"><div class="dock-copy"><strong id="dock-title"></strong><span id="dock-detail"></span></div><div class="dock-actions"><span class="dock-counter" id="dock-counter"></span><button class="outline-btn" data-action="sources">Browse sources</button><button class="primary" id="run-button" data-action="run"></button></div></div><dialog id="sources-modal"><div class="modal-head"><h2>Materials & sources</h2><button aria-label="Close materials window" data-close="sources-modal">×</button></div><div class="modal-body"><p class="hint">All eight tools share your group sources. Upload PDFs with Upload & automate, paste text here, or import a ScholarFlow JSON result. The owner’s private Google Drive archive is separate from this group. </p><div class="modal-actions" style="justify-content:flex-start;margin-bottom:18px"><button class="outline-btn" data-action="backup">Export backup</button><label class="outline-btn upload-label">Restore a backup<input id="import-file-modal" type="file" accept=".json" hidden></label></div><div id="source-list"></div><div class="field"><label for="new-title">Material title</label><input id="new-title" placeholder="e.g., Statistics lesson 3 lecture"></div><div class="form-row"><div class="field"><label for="new-id">Source ID (unique)</label><input id="new-id" placeholder="STAT-002"></div><div class="field"><label for="new-url">Original link (optional)</label><input id="new-url" type="url" placeholder="https://drive.google.com/…"></div></div><div class="field"><label for="new-text">Material text</label><textarea id="new-text" rows="6" placeholder="Paste searchable original text. Page numbers are not guessed when unclear."></textarea></div><div class="modal-actions"><label class="outline-btn upload-label"><span data-icon="upload"></span>Select TXT / MD<input type="file" id="source-file" accept=".txt,.md" hidden></label><button class="primary" data-action="add-source">Save material<span data-icon="arrow"></span></button></div></div></dialog>
 <dialog id="quote-modal"><div class="modal-head"><h2>Text & sources</h2><button aria-label="Close text window" data-close="quote-modal">×</button></div><div class="modal-body" id="quote-content"></div></dialog><div class="toast hidden" id="toast" role="status"></div>
 <script>
 const ICONS={brain:'<path d="M9 18c-6 2-7-5-4-7-3-5 3-9 6-5 3-4 9 0 6 5 3 2 2 9-4 7M11 6v14M7 10l4 2m4-2-4 4"/>',nodes:'<rect x="2" y="3" width="6" height="5" rx="1.5"/><rect x="14" y="15" width="6" height="5" rx="1.5"/><rect x="2" y="15" width="6" height="5" rx="1.5"/><path d="M5 8v7m0-4h12v4"/>',evidence:'<path d="M5 3h12v18H5zM8 7h6m-6 4h6m-6 4h3"/><path d="m14 15 2 2 4-5"/>',requirements:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="m8 8 1 1 2-2m2 1h3M8 13h8m-8 4h5"/>',compass:'<circle cx="12" cy="12" r="9"/><path d="m15 8-2 6-5 2 2-6z"/>',recipe:'<path d="m8 5-6 7 6 7m8-14 6 7-6 7m-3-17-2 20"/>',versions:'<path d="M4 5h10l-3-3m3 3-3 3M20 19H10l3 3m-3-3 3-3M5 9v10h2m12-4V5h-2"/>',search:'<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>',folder:'<path d="M2 6h7l2 3h11l-3 11H2zM2 6V3h7l3 3h7v3"/>',arrow:'<path d="M4 12h15m-5-5 5 5-5 5"/>',plus:'<path d="M12 5v14M5 12h14"/>',download:'<path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5"/>',upload:'<path d="M12 16V3m-4 4 4-4 4 4M4 16v5h16v-5"/>',external:'<path d="M13 3h8v8m0-8L10 14M9 4H3v17h17v-7"/>',check:'<path d="m5 12 4 4L20 5"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/>',spark:'<path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"/>',link:'<path d="m9 15 6-6M8 17l-2 2c-4 3-7-3-4-5l4-4c2-2 4-1 5 0m2 4c2 1 3 1 5-1l4-4c3-3-2-7-5-4l-2 2"/>'};
@@ -178,6 +178,210 @@ function renderConceptBank(){
  const summary=$('concept-bank')?.querySelector('summary');if(summary)summary.textContent='Browse all saved concepts · '+catalog.length+' available';
 }
 
+const BACKUP_TASKS=['misconceptions','reconstruction','evidence','requirements','methods','recipe','versions','repair'];
+const BACKUP_FIELDS=['version','sources','forms','history','concepts','connections','results','intakeJobs','intakeDrafts','learningDrafts','learningGoalDrafts','learningParentRunId','learningParentTarget','learningSourceId','revisionGuides','mcqDrafts','sessionEvidenceDrafts'];
+const backupObject=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
+const backupClone=value=>structuredClone(value);
+const backupNow=options=>typeof options.now==='function'?options.now():options.now||new Date().toISOString();
+function backupRequire(condition,message){if(!condition)throw new Error(message);}
+function backupArray(value,label){backupRequire(Array.isArray(value),label+' must be a list.');return value;}
+function backupString(value,label){backupRequire(typeof value==='string'&&value.trim(),label+' must be non-empty text.');return value;}
+function backupMap(value,label){backupRequire(backupObject(value),label+' must be an object.');return value;}
+function backupHasContent(value){
+ if(value===null||value===undefined||value==='')return false;
+ if(typeof value==='string')return Boolean(value.trim());
+ if(Array.isArray(value))return value.length>0;
+ if(backupObject(value))return Object.values(value).some(backupHasContent);
+ return true;
+}
+function backupFormHasContent(form){return Object.entries(form||{}).some(([key,value])=>key!=='confidence'&&backupHasContent(value))||Boolean(form&&form.confidence!==undefined&&form.confidence!==50);}
+function backupUnique(items,label){const ids=new Set();for(const item of items){backupString(item.id,label+' ID');backupRequire(!ids.has(item.id),'Duplicate '+label+' ID: '+item.id);ids.add(item.id);}}
+function backupSource(value,label='Material'){
+ backupMap(value,label);backupString(value.id,label+' ID');backupRequire(typeof value.text==='string',label+' text must be a string.');
+ const source={...backupClone(value),title:typeof value.title==='string'&&value.title?value.title:value.id};
+ if(source.page_map!==undefined)for(const page of backupArray(source.page_map,label+' page map')){
+  backupRequire(backupObject(page)&&Number.isInteger(page.page)&&page.page>0&&Number.isInteger(page.start)&&Number.isInteger(page.end)&&page.start>=0&&page.end>=page.start&&page.end<=source.text.length,label+' has an invalid page location.');
+ }
+ return source;
+}
+function backupConcepts(value,label){return backupArray(value,label).map(term=>backupString(term,label+' term'));}
+function backupConnections(value,label){return backupArray(value,label).map(edge=>{backupMap(edge,label+' relationship');for(const key of ['from','to','label'])backupString(edge[key],label+' '+key);return backupClone(edge);});}
+function backupForms(value,label){
+ const forms=backupClone(backupMap(value,label));
+ for(const [task,form]of Object.entries(forms)){
+  backupMap(form,label+' '+task);
+  if(form.positions!==undefined){backupMap(form.positions,label+' canvas positions');for(const position of Object.values(form.positions))backupRequire(backupObject(position)&&Number.isFinite(position.x)&&Number.isFinite(position.y),label+' has an invalid canvas position.');}
+  if(form.generated_concepts!==undefined)backupConcepts(form.generated_concepts,label+' generated concepts');
+ }
+ return forms;
+}
+function backupDraft(value,label){
+ backupMap(value,label);return {...backupClone(value),forms:backupForms(value.forms||{},label+' forms'),concepts:backupConcepts(value.concepts||[],label+' concepts'),connections:backupConnections(value.connections||[],label+' connections')};
+}
+function backupResult(value,label,mcq=false){
+ const result=backupClone(backupMap(value,label));result.items=result.items===undefined?[]:backupArray(result.items,label+' items');
+ if(result.concepts!==undefined)backupConcepts(result.concepts,label+' concepts');
+ if(result.missing!==undefined)backupArray(result.missing,label+' missing details');
+ for(const item of result.items){
+  backupMap(item,label+' item');
+  if(item.evidence!==undefined)for(const evidence of backupArray(item.evidence,label+' evidence')){backupMap(evidence,label+' evidence');backupString(evidence.source_id,label+' evidence Source ID');backupRequire(typeof evidence.quote==='string',label+' evidence quotation must be text.');}
+  if(mcq){backupRequire(Array.isArray(item.options)&&item.options.length===4&&item.options.every(option=>typeof option==='string'),label+' question must have four text options.');backupRequire(Number.isInteger(item.answer_index)&&item.answer_index>=0&&item.answer_index<4,label+' question has an invalid answer.');}
+ }
+ return result;
+}
+function backupHistory(value){
+ backupMap(value,'Practice record');backupString(value.id,'Practice record ID');backupString(value.at,'Practice date');
+ const mcq=value.record_type==='mcq_session',session=value.record_type==='study_session';
+ backupRequire(BACKUP_TASKS.includes(value.task)||mcq||session,'Unknown practice task: '+String(value.task));
+ const record={...backupClone(value),input:backupClone(backupMap(value.input,'Practice input')),result:backupResult(value.result,'Practice result',mcq),sources:backupArray(value.sources||[],'Practice source snapshots').map(source=>{backupMap(source,'Practice source snapshot');backupString(source.id,'Practice source ID');return backupClone(source);})};
+ if(value.workflow!==undefined&&value.workflow!==null)backupMap(value.workflow,'Practice workflow');
+ return record;
+}
+function backupPack(value){
+ backupMap(value,'Learning pack');backupString(value.source_id,'Learning pack Source ID');
+ const pack=backupClone(value);pack.source_title=typeof pack.source_title==='string'&&pack.source_title?pack.source_title:pack.source_id;pack.project=typeof pack.project==='string'?pack.project:'General';
+ for(const section of backupArray(pack.sections,'Learning pack note sections')){backupMap(section,'Note section');backupRequire(typeof section.heading==='string','Note section heading must be text.');if(section.terms!==undefined)for(const term of backupArray(section.terms,'Section terms'))backupRequire(typeof term==='string'||backupObject(term),'Section terms must contain text or term objects.');}
+ for(const card of backupArray(pack.cards,'Learning pack cards')){backupMap(card,'Evidence card');backupRequire(typeof card.original_text==='string','Evidence card original text must be a string.');}
+ backupMap(pack.reference,'Learning pack reference');for(const key of ['authors','missing_fields'])if(pack.reference[key]!==undefined)backupArray(pack.reference[key],'Reference '+key);
+ if(pack.warnings!==undefined)backupArray(pack.warnings,'Learning pack warnings');
+ return pack;
+}
+function backupJob(value,now){
+ backupMap(value,'Processing record');backupString(value.id,'Processing record ID');backupString(value.source_id,'Processing Source ID');
+ const job=backupClone(value);job.name=typeof job.name==='string'&&job.name?job.name:job.source_id;
+ backupRequire(typeof job.status==='string','Processing record status must be text.');
+ if(job.pack!==undefined&&job.pack!==null){job.pack=backupPack(job.pack);backupRequire(job.pack.source_id===job.source_id,'Learning pack Source ID differs from its processing record.');}
+ backupRequire(job.status!=='completed'||Boolean(job.pack),'A completed processing record is missing its learning pack.');
+ if(['queued','processing'].includes(job.status)){job.status='interrupted';job.error='Restored an unfinished upload. Review saved parts and explicitly resume; the original file may need to be selected again.';job.restored_at=now;}
+ return job;
+}
+function backupState(value,now){
+ backupMap(value,'Workspace');backupRequire(value.version===1,'This workspace backup version is not supported.');
+ const state={};for(const key of BACKUP_FIELDS)if(value[key]!==undefined)state[key]=backupClone(value[key]);
+ state.version=1;state.sources=backupArray(value.sources,'Workspace materials').map(source=>backupSource(source));state.history=backupArray(value.history,'Workspace practice history').map(backupHistory);
+ backupUnique(state.sources,'material');backupUnique(state.history,'practice');
+ state.forms=backupForms(value.forms||{},'Workspace forms');state.concepts=backupConcepts(value.concepts||[],'Workspace concepts');state.connections=backupConnections(value.connections||[],'Workspace connections');
+ state.results=backupClone(backupMap(value.results||{},'Workspace results'));
+ for(const [task,record]of Object.entries(state.results)){backupRequire(BACKUP_TASKS.includes(task),'Unknown saved result: '+task);const normalized=backupHistory(record);backupRequire(normalized.task===task,'Saved result task does not match its key.');if(!state.history.some(item=>item.id===normalized.id))state.history.push(normalized);}
+ state.intakeJobs=backupArray(value.intakeJobs||[],'Processing records').map(job=>backupJob(job,now));backupUnique(state.intakeJobs,'processing record');
+ state.learningDrafts=backupClone(backupMap(value.learningDrafts||{},'Material drafts'));for(const [sourceId,draft]of Object.entries(state.learningDrafts))state.learningDrafts[sourceId]=backupDraft(draft,'Material '+sourceId+' draft');
+ for(const key of ['intakeDrafts','learningGoalDrafts','revisionGuides','mcqDrafts','sessionEvidenceDrafts'])state[key]=backupClone(backupMap(value[key]||{},key));
+ for(const [id,draft]of Object.entries(state.intakeDrafts)){
+  backupMap(draft,'Upload draft '+id);if(draft.results!==undefined){for(const result of backupArray(draft.results,'Saved upload parts')){backupMap(result,'Saved upload part');result.pack=backupPack(result.pack);}}
+  if(draft.prepared!==undefined){backupMap(draft.prepared,'Prepared upload');backupRequire(typeof draft.prepared.text==='string'&&Array.isArray(draft.prepared.segments)&&Array.isArray(draft.prepared.page_map),'Prepared upload is incomplete.');}
+ }
+ for(const [id,guide]of Object.entries(state.revisionGuides)){backupMap(guide,'Revision guide '+id);if(guide.drafts!==undefined)backupForms(guide.drafts,'Concept explanation drafts');}
+ for(const draft of Object.values(state.mcqDrafts)){
+  backupMap(draft,'MCQ draft');backupString(draft.id,'MCQ draft ID');backupString(draft.source_id,'MCQ draft Source ID');backupMap(draft.input,'MCQ draft input');backupRequire(backupArray(draft.answers,'MCQ draft answers').every(answer=>answer===null||Number.isInteger(answer)&&answer>=0&&answer<4),'MCQ draft has an invalid selected answer.');backupArray(draft.sources||[],'MCQ draft sources');if(draft.result)backupResult(draft.result,'MCQ draft result',true);
+ }
+ for(const draft of Object.values(state.sessionEvidenceDrafts))backupMap(draft,'Study-session draft');
+ for(const goal of Object.values(state.learningGoalDrafts))backupRequire(typeof goal==='string','Learning-goal drafts must be text.');
+ if(state.learningSourceId!==undefined&&state.learningSourceId!==null)backupString(state.learningSourceId,'Selected material ID');
+ return state;
+}
+function backupRememberTop(state){
+ const selected=state.sources.find(source=>source.id===state.learningSourceId);if(!selected)return;
+ state.learningDrafts=state.learningDrafts||{};state.learningDrafts[selected.id]={...(state.learningDrafts[selected.id]||{}),forms:backupClone(state.forms||{}),concepts:backupClone(state.concepts||[]),connections:backupClone(state.connections||[])};
+}
+function backupKnownState(state){
+ const snapshot={};for(const key of BACKUP_FIELDS)if(state[key]!==undefined)snapshot[key]=backupClone(state[key]);
+ snapshot.version=1;snapshot.sources=snapshot.sources||[];snapshot.history=snapshot.history||[];snapshot.forms=snapshot.forms||{};snapshot.results=snapshot.results||{};snapshot.concepts=snapshot.concepts||[];snapshot.connections=snapshot.connections||[];snapshot.learningDrafts=snapshot.learningDrafts||{};
+ backupRememberTop(snapshot);return snapshot;
+}
+
+function buildWorkspaceBackup(state,options={}){
+ return {format:'scholarflow-workspace-backup',backup_version:2,exported_at:backupNow(options),workspace:backupKnownState(state)};
+}
+
+function backupExternal(data,current,now,warnings){
+ backupString(data.source_id,'Imported Source ID');backupArray(data.cards,'Imported cards');
+ const full=data.sections!==undefined,pack=full?backupPack(data):null;
+ const cards=data.cards.map(card=>{backupMap(card,'Imported card');const text=card.original_text??card.original??'';backupRequire(typeof text==='string','Imported original text must be a string.');return text;}).filter(Boolean);
+ backupRequire(full||cards.length>0,'No importable original-text cards were found.');
+ const source={id:data.source_id,title:data.source_title||data.source_id,url:typeof data.source_url==='string'?data.source_url:'',text:cards.join('\n\n'),text_scope:'card_excerpts',import_note:'Only original-text card excerpts were included in this JSON; the complete original document was not included.'};
+ const state={version:1,sources:[source],history:[],forms:{},results:{},concepts:[],connections:[],learningSourceId:source.id,intakeJobs:[]};
+ if(pack){
+  // A standalone pack has no processing-record ID. Match its material to the
+  // current completed pack so normal local-priority merging keeps that work.
+  const savedPack=(current.intakeJobs||[]).filter(job=>job.source_id===pack.source_id&&job.status==='completed'&&job.pack).at(-1);
+  state.intakeJobs.push({id:savedPack?.id||'import-pack:'+pack.source_id,source_id:pack.source_id,name:pack.source_title,project:pack.project,status:'completed',at:now,completed_at:now,phase:'Completed learning pack restored from JSON',pack,notes_markdown:pack.sections.map(section=>'## '+section.heading+'\n\n'+(section.summary_en||'')+'\n\n'+(section.explanation_zh||'')).join('\n\n'),parts_done:pack.processing?.parts||1,parts_total:pack.processing?.parts||1});
+ }
+ if(!current.sources.some(item=>item.id===source.id))warnings.push(cards.length?'This JSON contains original-text card excerpts, not the complete original document. Source checking will use those excerpts.':'This learning pack has no original-text cards. Its notes can be read, but the original material is needed for source checking.');
+ return {format:full?'learning-pack':'dify-cards',state:backupState(state,now)};
+}
+function backupEntityMerge(local,incoming,kind,counts,conflicts,mergeMissing){
+ const result=backupClone(local),positions=new Map(result.map((item,index)=>[item.id,index]));
+ for(const item of incoming){const index=positions.get(item.id);if(index===undefined){result.push(backupClone(item));positions.set(item.id,result.length-1);counts.added++;}else{counts.kept++;if(mergeMissing)result[index]=mergeMissing(result[index],item);if(JSON.stringify(result[index])!==JSON.stringify(item))conflicts.push({kind,id:item.id,reason:'Existing local record retained.'});}}
+ return result;
+}
+function backupMergeForms(local,incoming,sourceId,summary,conflicts){
+ const forms=backupClone(local||{});
+ for(const [task,form]of Object.entries(incoming||{})){
+  if(!backupFormHasContent(forms[task])){forms[task]=backupClone(form);if(backupFormHasContent(form))summary.drafts.restored++;}
+  else if(backupFormHasContent(form)){summary.drafts.kept++;if(JSON.stringify(forms[task])!==JSON.stringify(form))conflicts.push({kind:'draft',id:sourceId+':'+task,reason:'Existing non-empty local draft retained.'});}
+ }
+ return forms;
+}
+function backupMergeDraft(local,incoming,sourceId,summary,conflicts){
+ if(!local){summary.drafts.restored++;summary.concepts.added+=incoming.concepts.length;summary.connections.added+=incoming.connections.length;return backupClone(incoming);}
+ const draft={...backupClone(local),forms:backupMergeForms(local.forms,incoming.forms,sourceId,summary,conflicts)};
+ const ownCanvas=(local.concepts||[]).length||(local.connections||[]).length||backupHasContent(local.forms?.reconstruction?.positions);
+ if(ownCanvas){
+  draft.concepts=backupClone(local.concepts||[]);draft.connections=backupClone(local.connections||[]);summary.concepts.kept+=incoming.concepts.length;summary.connections.kept+=incoming.connections.length;
+  if(incoming.concepts.length||incoming.connections.length)conflicts.push({kind:'canvas',id:sourceId,reason:'Existing non-empty local concept canvas retained.'});
+  if(local.forms?.reconstruction)draft.forms.reconstruction=backupClone(local.forms.reconstruction);
+ }else{
+  draft.concepts=backupClone(incoming.concepts);draft.connections=backupClone(incoming.connections);summary.concepts.added+=incoming.concepts.length;summary.connections.added+=incoming.connections.length;
+  if(incoming.forms?.reconstruction?.positions){draft.forms.reconstruction=draft.forms.reconstruction||{};draft.forms.reconstruction.positions=backupClone(incoming.forms.reconstruction.positions);}
+ }
+ return draft;
+}
+function backupMergeMap(local,incoming,kind,summary,conflicts){
+ const map=backupClone(local||{});for(const [key,value]of Object.entries(incoming||{})){
+  if(!backupHasContent(map[key])){map[key]=backupClone(value);if(backupHasContent(value))summary.drafts.restored++;}
+  else if(backupHasContent(value)){summary.drafts.kept++;if(JSON.stringify(map[key])!==JSON.stringify(value))conflicts.push({kind,id:key,reason:'Existing non-empty local draft retained.'});}
+ }return map;
+}
+
+function planWorkspaceImport(current,data,options={}){
+ backupMap(data,'Import file');const now=backupNow(options),warnings=[],conflicts=[];
+ const local=backupKnownState(current);let incoming,format='workspace';
+ if(data.format==='scholarflow-workspace-backup'){backupRequire(data.backup_version===2,'This backup format version is not supported.');incoming=backupState(data.workspace,now);}
+ else if(data.version===1&&Array.isArray(data.sources)&&Array.isArray(data.history))incoming=backupState(data,now);
+ else if(data.source_id&&Array.isArray(data.cards)){const external=backupExternal(data,local,now,warnings);incoming=external.state;format=external.format;}
+ else throw new Error('Select a ScholarFlow workspace backup, learning-pack JSON, or Dify original-text cards JSON.');
+ // Legacy backups kept only one top-level canvas. Attach it to its selected
+ // material (or the last material, matching the application's selection rule).
+ const incomingSelected=incoming.sources.some(source=>source.id===incoming.learningSourceId)?incoming.learningSourceId:incoming.sources.at(-1)?.id;
+ if(incomingSelected&&!incoming.learningDrafts[incomingSelected])incoming.learningDrafts[incomingSelected]={forms:backupClone(incoming.forms),concepts:backupClone(incoming.concepts),connections:backupClone(incoming.connections)};
+ const summary={sources:{added:0,kept:0},history:{added:0,kept:0},intakeJobs:{added:0,kept:0},learningPacks:{added:0,kept:0},concepts:{added:0,kept:0},connections:{added:0,kept:0},drafts:{restored:0,kept:0}};
+ const next=backupClone(local);next.sources=backupEntityMerge(local.sources,incoming.sources,'source',summary.sources,conflicts,(own,restored)=>{if(!backupHasContent(own.learning_goal)&&backupHasContent(restored.learning_goal))own.learning_goal=restored.learning_goal;return own;});
+ next.history=backupEntityMerge(local.history,incoming.history,'history',summary.history,conflicts);
+ next.intakeJobs=backupEntityMerge(local.intakeJobs||[],incoming.intakeJobs,'pack',summary.intakeJobs,conflicts,(own,restored)=>{
+  if(['failed','interrupted'].includes(own.status)&&!own.pack&&restored.status==='completed'&&restored.pack){
+   const recovered={...backupClone(restored),...own,status:'completed',pack:backupClone(restored.pack),notes_markdown:restored.notes_markdown||'',completed_at:restored.completed_at||now,phase:'Completed learning pack restored from backup',parts_done:restored.parts_done,parts_total:restored.parts_total,original_url:own.original_url||restored.original_url||'',url:own.url||restored.url||''};delete recovered.error;summary.learningPacks.added++;return recovered;
+  }
+  if(restored.pack)summary.learningPacks.kept++;return own;
+ });
+ for(const job of incoming.intakeJobs)if(job.pack&&!local.intakeJobs?.some(own=>own.id===job.id))summary.learningPacks.added++;
+ next.learningDrafts=backupClone(local.learningDrafts||{});for(const [sourceId,draft]of Object.entries(incoming.learningDrafts))next.learningDrafts[sourceId]=backupMergeDraft(next.learningDrafts[sourceId],draft,sourceId,summary,conflicts);
+ for(const key of ['learningGoalDrafts','mcqDrafts','sessionEvidenceDrafts','intakeDrafts'])next[key]=backupMergeMap(local[key],incoming[key],key,summary,conflicts);
+ next.revisionGuides=backupClone(local.revisionGuides||{});
+ for(const [sourceId,guide]of Object.entries(incoming.revisionGuides)){
+  if(!next.revisionGuides[sourceId]){next.revisionGuides[sourceId]=backupClone(guide);summary.drafts.restored++;}
+  else{const own=next.revisionGuides[sourceId];own.drafts=backupMergeForms(own.drafts,guide.drafts,sourceId+':concept',summary,conflicts);if(JSON.stringify(own)!==JSON.stringify(guide))conflicts.push({kind:'revisionGuide',id:sourceId,reason:'Existing local revision guide retained; missing concept drafts restored.'});}
+ }
+ const localSelected=next.sources.some(source=>source.id===local.learningSourceId)?local.learningSourceId:null;
+ next.learningSourceId=localSelected||(next.sources.some(source=>source.id===incomingSelected)?incomingSelected:next.sources.at(-1)?.id)||null;
+ const selectedDraft=next.learningDrafts[next.learningSourceId]||{forms:{},concepts:[],connections:[]};next.forms=backupClone(selectedDraft.forms||{});next.concepts=backupClone(selectedDraft.concepts||[]);next.connections=backupClone(selectedDraft.connections||[]);
+ if(!localSelected){next.learningParentRunId=incoming.learningParentRunId||null;next.learningParentTarget=incoming.learningParentTarget||null;}
+ if(next.learningParentRunId&&!next.history.some(record=>record.id===next.learningParentRunId)){next.learningParentRunId=null;next.learningParentTarget=null;}
+ next.history.sort((a,b)=>a.at.localeCompare(b.at));next.results={};for(const record of next.history)if(BACKUP_TASKS.includes(record.task)&&!record.record_type)next.results[record.task]=record;
+ if(incoming.intakeJobs.some(job=>job.status==='interrupted'))warnings.push('Unfinished processing records were restored as interrupted. Importing does not resume uploads or call AI.');
+ if(incoming.intakeJobs.some(job=>job.original_url)||incoming.sources.some(source=>source.original_url))warnings.push('Original-file links were retained. The JSON does not contain the original binary files or copy them into this group.');
+ return {format,nextState:next,summary,conflicts,warnings};
+}
+
 const TOOL_THEMES={misconceptions:['#9265b1','#eee5f4','EXPLAIN · COMPARE · REFLECT'],reconstruction:['#728961','#e9efdf','ARRANGE · CONNECT · EXPLAIN'],evidence:['#a88c58','#f2ebdd','CLAIM · SUPPORT · CHALLENGE'],requirements:['#bd9458','#f4ebdb','BRIEF · DRAFT · RULES'],methods:['#7196a5','#e6eff2','DESIGN · CONDITIONS · UNKNOWNS'],recipe:['#b09063','#f1e8d9','SOURCE · STEPS · PARAMETERS'],versions:['#aa7ca7','#f0e5ee','BEFORE · AFTER · DEPENDENCIES'],repair:['#7d91b7','#e9edf6','QUOTATION · MATCH · CONTEXT']};
 let lastToolRoute='',toolDrag=null,conceptSelection=[],conceptSelectionSource='';
 const toolField=(label,key,value,rows=4,placeholder='')=>'<div class="field"><label for="f-'+key+'">'+label+'</label><textarea id="f-'+key+'" data-field="'+key+'" rows="'+rows+'" placeholder="'+esc(placeholder)+'">'+esc(value)+'</textarea></div>';
@@ -307,10 +511,9 @@ function openSources(){$('source-list').innerHTML=state.sources.map(s=>'<article
 function showQuote(index){const evidence=quotePool[index];if(evidence)showSourceEvidence(evidence,latest?.sources||state.sources);}
 document.addEventListener('click',e=>{if(busy&&e.target.closest('[data-go],a[href^="#"]')){e.preventDefault();e.stopImmediatePropagation();toast('Wait for the current task to finish.');}},true);
 document.addEventListener('input',e=>{if(!e.target.matches('[data-field]'))return;if(e.target.dataset.field==='confidence')$('confidence-value').textContent=e.target.value+'%';if(active==='requirements')countWords();clearTimeout(timer);timer=setTimeout(capture,250);});
-document.addEventListener('click',e=>{const target=e.target.closest('button,a');if(!target)return;if(target.dataset.go&&!busy){capture();location.hash=target.dataset.go;return;}if(target.dataset.close){$(target.dataset.close).close();return;}if(target.dataset.quote!==undefined){showQuote(Number(target.dataset.quote));return;}if(target.dataset.removeEdge!==undefined){state.connections.splice(Number(target.dataset.removeEdge),1);save();drawBoard();return;}if(target.dataset.historyId){latest=state.history.find(h=>h.id===target.dataset.historyId);showResult();$('result-section').scrollIntoView({behavior:'smooth',block:'start'});return;}if(target.dataset.deleteSource){if(busy)return toast('Wait for the current task to finish.');state.sources=state.sources.filter(s=>s.id!==target.dataset.deleteSource);save();render();$('sources-modal').close();openSources();return;}switch(target.dataset.action){case 'run':run();break;case 'generate-concepts':run(true);break;case 'sources':openSources();break;case 'backup':capture();exportFile('ScholarFlow_Workspace backup.json',state);break;case 'export-result':if(latest)exportFile('ScholarFlow_'+active+'_Results.json',latest);break;case 'export-markdown':if(latest)exportFile('ScholarFlow_'+active+'.md',resultMarkdown(),'text/markdown;charset=utf-8');break;case 'notebook':if(latest)exportFile('ScholarFlow_Replication recipe_Not executed.ipynb',notebook());break;case 'add-edge':{const from=$('edge-from').value,to=$('edge-to').value,label=$('edge-label').value.trim();if(!from||!to||!availableConceptNames().includes(from)||!availableConceptNames().includes(to))return toast('Load or generate at least two concepts before adding a connection.');if(!label)return toast('Please fill in the relationship between the two concepts.');if(from===to)return toast('Please select two different concepts.');for(const name of [from,to])if(!state.concepts.includes(name))state.concepts.push(name);state.connections.push({from,to,label});save();drawBoard();break;}case 'diff':previewVersionDiff();break;case 'add-source':{const title=$('new-title').value.trim(),id=$('new-id').value.trim(),text=$('new-text').value.trim(),url=$('new-url').value.trim();if(!title||!id||!text)return toast('Please fill in title,Source ID and original material text.');if(['ASSIGNMENT','NEW','OLD','METHODS'].includes(id)||state.sources.some(s=>s.id===id))return toast('This ID is already in use; please choose a different material ID.');if(url&&!safeURL(url))return toast('Please fill in a valid http or https original link.');state.sources.push({title,id,text,url,author:groupMember()});if(!busy&&typeof selectLearningSource==='function')selectLearningSource(id);save();$('sources-modal').close();for(const x of ['new-title','new-id','new-text','new-url'])$(x).value='';nav();aside();if(typeof renderLearningPath==='function')renderLearningPath();toast('Material added to its own learning workspace.');break;}}});
+document.addEventListener('click',e=>{const target=e.target.closest('button,a');if(!target)return;if(target.dataset.go&&!busy){capture();location.hash=target.dataset.go;return;}if(target.dataset.close){$(target.dataset.close).close();return;}if(target.dataset.quote!==undefined){showQuote(Number(target.dataset.quote));return;}if(target.dataset.removeEdge!==undefined){state.connections.splice(Number(target.dataset.removeEdge),1);save();drawBoard();return;}if(target.dataset.historyId){latest=state.history.find(h=>h.id===target.dataset.historyId);showResult();$('result-section').scrollIntoView({behavior:'smooth',block:'start'});return;}if(target.dataset.deleteSource){if(busy)return toast('Wait for the current task to finish.');state.sources=state.sources.filter(s=>s.id!==target.dataset.deleteSource);save();render();$('sources-modal').close();openSources();return;}switch(target.dataset.action){case 'run':run();break;case 'generate-concepts':run(true);break;case 'sources':openSources();break;case 'backup':capture();exportFile('ScholarFlow_Workspace backup.json',buildWorkspaceBackup(state));break;case 'export-result':if(latest)exportFile('ScholarFlow_'+active+'_Results.json',latest);break;case 'export-markdown':if(latest)exportFile('ScholarFlow_'+active+'.md',resultMarkdown(),'text/markdown;charset=utf-8');break;case 'notebook':if(latest)exportFile('ScholarFlow_Replication recipe_Not executed.ipynb',notebook());break;case 'add-edge':{const from=$('edge-from').value,to=$('edge-to').value,label=$('edge-label').value.trim();if(!from||!to||!availableConceptNames().includes(from)||!availableConceptNames().includes(to))return toast('Load or generate at least two concepts before adding a connection.');if(!label)return toast('Please fill in the relationship between the two concepts.');if(from===to)return toast('Please select two different concepts.');for(const name of [from,to])if(!state.concepts.includes(name))state.concepts.push(name);state.connections.push({from,to,label});save();drawBoard();break;}case 'diff':previewVersionDiff();break;case 'add-source':{const title=$('new-title').value.trim(),id=$('new-id').value.trim(),text=$('new-text').value.trim(),url=$('new-url').value.trim();if(!title||!id||!text)return toast('Please fill in title,Source ID and original material text.');if(['ASSIGNMENT','NEW','OLD','METHODS'].includes(id)||state.sources.some(s=>s.id===id))return toast('This ID is already in use; please choose a different material ID.');if(url&&!safeURL(url))return toast('Please fill in a valid http or https original link.');state.sources.push({title,id,text,url,author:groupMember()});if(!busy&&typeof selectLearningSource==='function')selectLearningSource(id);save();$('sources-modal').close();for(const x of ['new-title','new-id','new-text','new-url'])$(x).value='';nav();aside();if(typeof renderLearningPath==='function')renderLearningPath();toast('Material added to its own learning workspace.');break;}}});
 window.addEventListener('hashchange',()=>{capture();const key=location.hash.slice(1);if(busy){window.history.replaceState(null,'',location.pathname+location.search+'#'+active);return toast('Wait for the current task to finish.');}if(KEYS.includes(key)){active=key;render();window.scrollTo({top:0});}});
 $('source-file').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;$('new-text').value=await f.text();$('new-title').value=f.name.replace(/\.[^.]+$/,'');$('new-id').value='SRC-'+Date.now();});
-for(const fileControl of ['import-file','import-file-modal'])$(fileControl).addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const d=JSON.parse(await file.text());if(d.version===1&&Array.isArray(d.sources)&&Array.isArray(d.history)&&d.forms&&d.results){for(const s of d.sources)if(typeof s.id!=='string'||typeof s.text!=='string')throw new Error('Backup material format is incorrect');const ids=new Set(state.sources.map(s=>s.id));for(const s of d.sources)if(!ids.has(s.id)){state.sources.push(s);ids.add(s.id);}const historyIds=new Set(state.history.map(h=>h.id));for(const h of d.history)if(!historyIds.has(h.id)&&(KEYS.includes(h.task)||h.record_type==='study_session'||h.record_type==='mcq_session')){state.history.push(h);historyIds.add(h.id);}for(const k of KEYS)if(!state.results[k]&&d.results[k])state.results[k]=d.results[k];toast('Backup merged; local materials with the same ID and current input retained.');}else if(d.source_id&&Array.isArray(d.cards)){if(state.sources.some(s=>s.id===d.source_id))throw new Error('This Source ID already exists; skipped to avoid duplicates.');const text=d.cards.map(c=>c.original_text||c.original||'').filter(Boolean).join('\n\n');if(!text)throw new Error('No importable original-text cards in results.');state.sources.push({id:d.source_id,title:d.source_title||d.source_id,url:d.source_url||'',text});toast('Dify Original-text cards imported; they do not represent complete documents.');}else throw new Error('Please select ScholarFlow backup or Dify Results JSON. ');save();render();}catch(err){toast('Import incomplete:'+err.message);}e.target.value='';});
 render();apiFetch('/api/status').then(r=>r.json()).then(s=>{$('connection').textContent=s.ready?'DeepSeek Connected':'DeepSeek To be configured';$('connection').classList.toggle('ready',s.ready);}).catch(()=>{$('connection').textContent='Offline HTML';});
 </script><style>
 .groupbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;padding:12px 17px;background:#eeece5;border:1px solid var(--line);border-radius:10px;font-size:11px}.groupbar strong{font-weight:500;color:var(--purple)}.groupbar-actions{display:flex;gap:15px;flex-wrap:wrap}.sync-label{color:var(--green);margin-left:10px}.sync-label.failed{color:#a96f68}.guide-progress{display:flex;gap:6px;margin-bottom:24px}.guide-progress i{height:4px;flex:1;background:#e7e1ed;border-radius:4px}.guide-progress i.active{background:var(--purple)}.guide-count{font-size:10px;letter-spacing:2px;color:var(--purple);margin-bottom:12px}.guide-title{font:30px/1.3 var(--serif);margin:0 0 14px}.guide-copy{font-size:13px;color:#8c7998;line-height:1.9;margin-bottom:22px}.guide-preview{background:#f1edf7;border-radius:12px;padding:21px;margin:20px 0;color:#877299;line-height:1.9}.guide-footer{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-top:25px}.empty-start{padding:19px 22px;border:1px dashed #cbbdde;background:#f6f2fa;border-radius:12px;margin-bottom:18px}.empty-start h2{font:23px var(--serif);margin:0 0 8px}.empty-start p{font-size:12px;color:#9684a3;margin-bottom:15px}.group-link{font-size:11px;margin:14px 0;word-break:break-all}.group-name{max-width:240px}.guide-task-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.guide-task-grid div{padding:12px;background:#f7f4f9;border-radius:8px;font-size:11px;color:#8b789b}@media(max-width:680px){.groupbar{align-items:flex-start;flex-direction:column}.groupbar-actions{gap:12px}.guide-title{font-size:26px}.guide-task-grid{grid-template-columns:1fr}.top-actions [data-action=backup]{display:none}}
@@ -1774,5 +1977,224 @@ body.ui-refined #result-section .match-card footer{font-size:12px;color:#7c8e85;
  body.ui-refined dialog .modal-head>button,body.ui-refined #mcq-dialog .mcq-option{transition:none}
 }
 </style>
+
+<style>
+html:has(#backup-import-dialog[open]){overflow:hidden}
+body.ui-refined #backup-import-dialog{width:min(820px,calc(100vw - 48px));max-width:820px}
+body.ui-refined #backup-import-dialog .modal-head{padding:22px 28px;align-items:center}
+body.ui-refined #backup-import-dialog .modal-head h2{font:700 23px/1.3 var(--sans);letter-spacing:-.6px}
+.backup-import-kicker{font:600 10px/1.5 var(--sans);letter-spacing:1.5px;text-transform:uppercase;color:#9386bd;margin-bottom:6px}
+body.ui-refined #backup-import-dialog .modal-body{padding:25px 28px 28px}
+.backup-import-steps{display:flex;gap:10px;align-items:center;margin:0 0 27px;list-style:none;padding:0}
+.backup-import-steps li{display:flex;gap:8px;align-items:center;color:#969caf;font:500 12px/1.5 var(--sans)}
+.backup-import-steps li+li:before{content:'';width:28px;height:1px;background:#e3e6f0;margin-right:1px}
+.backup-import-steps li span{display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#f0f2f8;color:#939bb0;font-size:11px;font-weight:650}
+.backup-import-steps li.current{color:#6652bf}
+.backup-import-steps li.current span{background:#ebe5ff;color:#7157cb}
+.backup-import-steps li.done{color:#527d68}
+.backup-import-steps li.done span{background:#eaf4ee;color:#478165}
+.backup-import-lead{font:14px/1.8 var(--sans);color:#707b92;margin:0 0 23px;max-width:650px}
+.backup-import-file{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid #e4e7f0;border-radius:13px;background:#fbfcff;margin-bottom:23px}
+.backup-import-file-icon{display:grid;place-items:center;flex-shrink:0;width:43px;height:47px;border:1px solid #ded8f3;border-radius:9px;background:#f0ebff;color:#8b74c8;font:700 10px/1 var(--sans);letter-spacing:.3px}
+.backup-import-file-copy{flex:1;min-width:0}
+.backup-import-file strong{display:block;font:650 14px/1.6 var(--sans);color:#46516d;overflow-wrap:anywhere}
+.backup-import-file small{display:block;margin-top:2px;font:12px/1.6 var(--sans);color:#8b94a7}
+.backup-import-file .text-btn{font-size:12px;white-space:nowrap}
+.backup-import-drop{border:1.5px dashed #c7b9eb;background:#f8f5ff;border-radius:15px;padding:35px 24px;text-align:center;margin:20px 0}
+.backup-import-drop svg{width:32px;height:32px;color:#8c78cb;margin:0 auto 13px}
+.backup-import-drop h3{font:650 20px/1.45 var(--sans);letter-spacing:-.4px;color:#4c436c;margin:0 0 7px}
+.backup-import-drop p{font:13px/1.8 var(--sans);color:#8b809f;margin:0 0 18px}
+.backup-import-drop .primary{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.backup-import-section-label{font:600 11px/1.5 var(--sans);letter-spacing:1px;color:#8d95a9;text-transform:uppercase;margin:0 0 12px}
+.backup-import-counts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 0 22px}
+.backup-import-stat{min-width:0;padding:16px 13px;border:1px solid #e4e8f1;border-radius:12px;background:#fff}
+.backup-import-stat strong{display:block;font:700 27px/1.3 var(--sans);letter-spacing:-.8px;color:#525274;margin-bottom:7px}
+.backup-import-stat span{display:block;font:500 12px/1.5 var(--sans);color:#748098;min-height:36px}
+.backup-import-stat small{display:block;font:11px/1.6 var(--sans);color:#9199ad;margin-top:8px}
+.backup-import-stat:first-child{background:#f8f5ff;border-color:#e5dcf7}
+.backup-import-stat:first-child strong{color:#8e70c5}
+.backup-import-notes{padding:16px 18px;border:1px solid #e7eaf2;border-radius:12px;background:#f8f9fd;margin-top:20px}
+.backup-import-notes h3{font:650 13px/1.6 var(--sans);color:#5d6780;margin:0 0 7px}
+.backup-import-notes ul{padding:0 0 0 17px;margin:0;color:#828ba0;font:12px/1.8 var(--sans)}
+.backup-import-notes li+li{margin-top:3px}
+.backup-import-merge-copy{font:12px/1.85 var(--sans);color:#7a849b;padding:17px 18px;background:#f8f9fd;border:1px solid #e7eaf2;border-radius:12px;margin:20px 0 0}
+.backup-import-merge-copy strong{font-weight:600;color:#5f6b84}
+.backup-import-merge-copy p{margin:6px 0 0;font:inherit;color:#929aab}
+.backup-import-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid #e8ebf3;margin-top:26px;padding-top:21px}
+.backup-import-footer p{font:12px/1.75 var(--sans);color:#9299ad;max-width:400px;margin:0}
+.backup-import-actions{display:flex;gap:9px;flex-shrink:0}
+body.ui-refined #backup-import-dialog .backup-import-actions .primary{font-size:13px;min-width:175px;gap:10px}
+.backup-import-loading{display:flex;align-items:center;gap:12px;font:14px/1.8 var(--sans);color:#8a7aa5;padding:27px 0}
+.backup-import-error{border:1px solid #eed6d0;background:#fff5f2;border-radius:12px;padding:16px 18px;font:13px/1.8 var(--sans);color:#a36a5e;margin:20px 0;overflow-wrap:anywhere}
+.backup-import-success{display:flex;align-items:flex-start;gap:16px;margin:2px 0 25px}
+.backup-import-success-icon{width:45px;height:45px;border-radius:13px;background:#eaf5ee;color:#69a17e;display:grid;place-items:center;flex-shrink:0}
+.backup-import-success-icon svg{width:23px;height:23px}
+.backup-import-success h3{font:700 23px/1.4 var(--sans);letter-spacing:-.5px;color:#3c5c4d;margin:0 0 6px}
+.backup-import-success p{font:13px/1.8 var(--sans);color:#7c9285;margin:0}
+.backup-import-summary{font:13px/1.8 var(--sans);color:#718077;margin:0 0 18px}
+@media(max-width:650px){
+ body.ui-refined #backup-import-dialog{width:calc(100vw - 24px);border-radius:16px;max-height:94dvh}
+ body.ui-refined #backup-import-dialog .modal-head{padding:18px}
+ body.ui-refined #backup-import-dialog .modal-head h2{font-size:21px}
+ body.ui-refined #backup-import-dialog .modal-body{padding:20px 18px 23px}
+ .backup-import-steps{gap:7px;margin-bottom:22px}
+ .backup-import-steps li{font-size:11px;gap:6px}
+ .backup-import-steps li+li:before{width:13px;margin-right:0}
+ .backup-import-steps li span{width:23px;height:23px;border-radius:7px;font-size:10px}
+ .backup-import-lead{font-size:13px;margin-bottom:20px}
+ .backup-import-file{gap:11px;padding:14px}
+ .backup-import-file-icon{width:36px;height:42px;font-size:9px}
+ .backup-import-file strong{font-size:13px}
+ .backup-import-file small,.backup-import-file .text-btn{font-size:11px}
+ .backup-import-file .text-btn{max-width:65px;white-space:normal;line-height:1.5}
+ .backup-import-counts{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .backup-import-stat{padding:15px}
+ .backup-import-stat strong{font-size:25px;margin-bottom:5px}
+ .backup-import-stat span{font-size:12px;min-height:0}
+ .backup-import-stat small{font-size:11px;margin-top:7px}
+ .backup-import-stat:last-child{grid-column:1/-1}
+ .backup-import-drop{padding:27px 17px}
+ .backup-import-drop h3{font-size:19px}
+ .backup-import-drop p{font-size:12px}
+ .backup-import-notes{padding:15px}
+ .backup-import-footer{display:block;margin-top:23px;padding-top:18px}
+ .backup-import-footer p{font-size:11px;max-width:none;margin:0 0 15px}
+ .backup-import-actions{display:grid;grid-template-columns:1fr auto;gap:8px}
+ .backup-import-actions .primary{grid-column:1;grid-row:1}
+ .backup-import-actions .outline-btn{grid-column:2;grid-row:1}
+ body.ui-refined #backup-import-dialog .backup-import-actions .primary{min-width:0;font-size:12px;padding:11px 12px}
+ .backup-import-success{gap:12px}
+ .backup-import-success-icon{width:38px;height:38px;border-radius:11px}
+ .backup-import-success h3{font-size:21px}
+ .backup-import-success p{font-size:12px}
+}
+</style>
+<dialog id="backup-import-dialog" aria-labelledby="backup-import-title">
+ <div class="modal-head"><div><div class="backup-import-kicker">Workspace backup</div><h2 id="backup-import-title">Restore a workspace</h2></div><button type="button" data-close="backup-import-dialog" aria-label="Close workspace restore">×</button></div>
+ <div class="modal-body"><ol class="backup-import-steps" aria-label="Restore progress"><li data-backup-step="1"><span>1</span>Choose file</li><li data-backup-step="2"><span>2</span>Review</li><li data-backup-step="3"><span>3</span>Restore</li></ol><div id="backup-import-content" aria-live="polite"></div></div>
+</dialog>
+<input id="backup-import-file" type="file" accept=".json,application/json" hidden>
+<script>
+let workspaceImportFileName='';
+let workspaceImportUIBusy=false;
+const workspaceImportCategories=[
+ ['materials','Materials'],['learningPacks','Learning packs'],['connections','Connections'],['savedPractice','Saved practice'],['drafts','Private drafts']
+];
+function workspaceImportSteps(step){
+ document.querySelectorAll('[data-backup-step]').forEach(item=>{const n=Number(item.dataset.backupStep);item.classList.toggle('current',n===step);item.classList.toggle('done',n<step);if(n===step)item.setAttribute('aria-current','step');else item.removeAttribute('aria-current');});
+}
+function workspaceImportFileHTML(fileName){
+ return '<div class="backup-import-file"><span class="backup-import-file-icon" aria-hidden="true">JSON</span><div class="backup-import-file-copy"><strong>'+esc(fileName)+'</strong><small>Workspace data file</small></div><button class="text-btn" type="button" data-backup-import="choose">Choose another</button></div>';
+}
+function workspaceImportCountsHTML(counts,details={}){
+ return '<div class="backup-import-counts">'+workspaceImportCategories.map(([key,label])=>'<div class="backup-import-stat"><strong>'+Number(counts[key]||0).toLocaleString()+'</strong><span>'+label+'</span>'+(details[key]?'<small>'+esc(details[key])+'</small>':'')+'</div>').join('')+'</div>';
+}
+function workspaceImportNotesHTML(title,notes){
+ return notes?.length?'<section class="backup-import-notes"><h3>'+esc(title)+'</h3><ul>'+notes.map(note=>'<li>'+esc(note)+'</li>').join('')+'</ul></section>':'';
+}
+function openWorkspaceImportDialog(){
+ workspaceImportFileName='';workspaceImportUIBusy=false;workspaceImportSteps(1);
+ $('backup-import-content').innerHTML='<p class="backup-import-lead">Bring materials and saved work back into your learning space. Review the file before you merge it.</p><div class="backup-import-drop">'+icon('upload')+'<h3>Choose your workspace backup</h3><p>Select a workspace backup, learning pack or Dify cards JSON.</p><button class="primary" type="button" data-backup-import="choose">Choose JSON file '+icon('arrow')+'</button></div>';
+ if(!$('backup-import-dialog').open)$('backup-import-dialog').showModal();
+}
+function showWorkspaceImportLoading(fileName){
+ workspaceImportFileName=fileName;workspaceImportUIBusy=true;workspaceImportSteps(2);
+ $('backup-import-content').innerHTML=workspaceImportFileHTML(fileName)+'<div class="backup-import-loading"><span class="spinner"></span>Reading your workspace file…</div>';
+ if(!$('backup-import-dialog').open)$('backup-import-dialog').showModal();
+}
+function showWorkspaceImportPreview({fileName,summary}){
+ workspaceImportFileName=fileName;workspaceImportUIBusy=false;workspaceImportSteps(2);
+ $('backup-import-content').innerHTML='<p class="backup-import-lead">Review the saved work in this file, then merge it into your current workspace.</p>'+workspaceImportFileHTML(fileName)+'<div class="backup-import-section-label">Ready to restore</div>'+workspaceImportCountsHTML(summary)+'<div class="backup-import-merge-copy"><strong>Your existing materials and current drafts stay in place.</strong> New materials, learning packs and saved practice join this shared group. Concept maps and restored drafts stay on this device.<p>The JSON contains workspace records and source links. Original files remain in their existing storage.</p></div>'+workspaceImportNotesHTML('Import details',summary.notes)+'<div class="backup-import-footer"><p>'+esc(summary.message||'Ready when you are. Confirm to restore the saved work above.')+'</p><div class="backup-import-actions"><button class="outline-btn" type="button" data-close="backup-import-dialog">Cancel</button><button class="primary" type="button" id="backup-import-confirm" data-backup-import="confirm">Merge into workspace '+icon('arrow')+'</button></div></div>';
+ if(!$('backup-import-dialog').open)$('backup-import-dialog').showModal();
+}
+function setWorkspaceImportBusy(isBusy){
+ workspaceImportUIBusy=isBusy;
+ $('backup-import-dialog').querySelectorAll('[data-backup-import]').forEach(button=>button.disabled=isBusy);
+ const confirm=$('backup-import-confirm');if(confirm)confirm.innerHTML=isBusy?'<span class="spinner"></span>Restoring workspace…':'Merge into workspace '+icon('arrow');
+}
+function showWorkspaceImportSuccess(summary){
+ workspaceImportUIBusy=false;workspaceImportSteps(3);
+ $('backup-import-content').innerHTML='<div class="backup-import-success"><span class="backup-import-success-icon" aria-hidden="true">'+icon('check')+'</span><div><h3>Workspace restored</h3><p>'+esc(workspaceImportFileName)+'</p></div></div><p class="backup-import-summary">'+esc(summary.message||'Your imported work is ready in this workspace.')+'</p>'+workspaceImportCountsHTML(summary)+workspaceImportNotesHTML('Restored work',summary.notes)+'<div class="backup-import-footer"><p>You can return to your material and continue learning.</p><div class="backup-import-actions"><button class="outline-btn" type="button" data-backup-import="choose">Import another file</button><button class="primary" type="button" data-close="backup-import-dialog">Back to workspace '+icon('arrow')+'</button></div></div>';
+ if(!$('backup-import-dialog').open)$('backup-import-dialog').showModal();
+}
+function showWorkspaceImportError(message){
+ workspaceImportUIBusy=false;workspaceImportSteps(2);
+ $('backup-import-content').innerHTML=(workspaceImportFileName?workspaceImportFileHTML(workspaceImportFileName):'')+'<div class="backup-import-error" role="alert">'+esc(message)+'</div><div class="backup-import-footer"><p>Select another workspace JSON file to try again.</p><div class="backup-import-actions"><button class="outline-btn" type="button" data-close="backup-import-dialog">Close</button><button class="primary" type="button" data-backup-import="choose">Choose JSON file '+icon('arrow')+'</button></div></div>';
+ if(!$('backup-import-dialog').open)$('backup-import-dialog').showModal();
+}
+async function readWorkspaceImportFile(file){
+ if(!file||workspaceImportUIBusy)return;
+ showWorkspaceImportLoading(file.name);
+ try{const data=JSON.parse(await file.text());document.dispatchEvent(new CustomEvent('scholarflow-backup-selected',{detail:{fileName:file.name,data}}));}
+ catch(error){showWorkspaceImportError(error instanceof SyntaxError?'This file could not be read as JSON. Choose the workspace backup exported from ScholarFlow.':error.message);}
+}
+document.addEventListener('change',event=>{
+ if(event.target.id!=='backup-import-file')return;
+ const file=event.target.files?.[0];event.target.value='';if(file)readWorkspaceImportFile(file);
+});
+document.addEventListener('click',event=>{
+ const action=event.target.closest('[data-backup-import]')?.dataset.backupImport;if(!action||workspaceImportUIBusy)return;
+ if(action==='choose')$('backup-import-file').click();
+ if(action==='confirm')document.dispatchEvent(new CustomEvent('scholarflow-backup-confirm'));
+});
+</script>
+
+<script>
+let pendingWorkspaceImport=null;
+function workspaceImportBlocked(){return busy||intakeBusy||mcqGenerating;}
+function workspaceImportSummary(plan,restored=false){
+ const counts=plan.summary,notes=[...plan.warnings];
+ const kept=counts.sources.kept+counts.history.kept+counts.learningPacks.kept;
+ if(kept)notes.push(kept+' matching saved records are already here and will be kept.');
+ if(counts.drafts.kept||plan.conflicts.some(item=>item.kind==='canvas'))notes.push('Current non-empty drafts and concept maps take priority over their backed-up versions.');
+ if(counts.concepts.added)notes.push(counts.concepts.added+' concepts and their saved canvas positions '+(restored?'were restored':'will be restored')+' with their materials.');
+ return {materials:counts.sources.added,learningPacks:counts.learningPacks.added,connections:counts.connections.added,savedPractice:counts.history.added,drafts:counts.drafts.restored,notes,message:'Materials, learning packs and completed practice sync to this group. Private drafts and concept maps are saved on this device.'};
+}
+function previewWorkspaceImport(fileName,data){
+ pendingWorkspaceImport=null;
+ if(workspaceImportBlocked())return showWorkspaceImportError('Finish the current processing or practice task, then restore your backup.');
+ try{
+  capture();
+  const plan=planWorkspaceImport(state,data);
+  pendingWorkspaceImport={fileName,data};
+  showWorkspaceImportPreview({fileName,summary:workspaceImportSummary(plan)});
+ }catch(error){showWorkspaceImportError(error.message);}
+}
+function confirmWorkspaceImport(){
+ if(!pendingWorkspaceImport||workspaceImportUIBusy)return;
+ if(workspaceImportBlocked())return showWorkspaceImportError('Finish the current processing or practice task, then restore your backup.');
+ setWorkspaceImportBusy(true);
+ try{
+  capture();
+  const plan=planWorkspaceImport(state,pendingWorkspaceImport.data);
+  // Persist the complete plan before changing the visible workspace. A full
+  // browser store must not be reported as a successful restore.
+  try{localStorage.setItem(STORE,JSON.stringify(plan.nextState));}
+  catch{throw new Error('This browser could not save the restored workspace. Free some browser storage and try again; your current workspace has been kept.');}
+  state=plan.nextState;
+  render();
+  save();
+  intakeQueue();
+  if(typeof updateStudioOverview==='function')updateStudioOverview();
+  pendingWorkspaceImport=null;
+  showWorkspaceImportSuccess(workspaceImportSummary(plan,true));
+ }catch(error){showWorkspaceImportError(error.message);}
+}
+document.addEventListener('scholarflow-backup-selected',event=>previewWorkspaceImport(event.detail.fileName,event.detail.data));
+document.addEventListener('scholarflow-backup-confirm',confirmWorkspaceImport);
+for(const id of ['import-file','import-file-modal']){
+ const input=$(id),label=input.closest('label');
+ // Keep the existing file controls usable while making the restored-work
+ // preview the shared entry point from both the sidebar and source library.
+ label.addEventListener('click',event=>{
+  event.preventDefault();pendingWorkspaceImport=null;
+  if($('sources-modal').open)$('sources-modal').close();
+  openWorkspaceImportDialog();
+ });
+ label.setAttribute('role','button');label.tabIndex=0;
+ label.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();label.click();}});
+ input.addEventListener('change',event=>{const file=event.target.files?.[0];event.target.value='';if(file)readWorkspaceImportFile(file);});
+}
+</script>
 
 </body></html>
