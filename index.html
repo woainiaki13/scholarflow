@@ -166,16 +166,17 @@ function conceptBankStyles(){
 }
 function conceptBankMarkup(){
  const count=availableConceptNames().length,focus=state.forms?.reconstruction?.concept_focus||'';
- return '<details class="concept-bank" id="concept-bank" open><summary>Browse all saved concepts · '+count+' available</summary><p>Choose related ideas from the same section or compare ideas across sections. Selecting concepts prepares From and To; add a relationship to place them on your canvas.</p><div class="concept-bank-search"><label for="concept-filter">SEARCH CONCEPTS OR FOCUS A NEW EXTRACTION</label><input id="concept-filter" data-field="concept_focus" value="'+esc(focus)+'" placeholder="Search a term, definition or section…" autocomplete="off"></div><div class="concept-bank-groups" id="concept-bank-groups"></div><div class="concept-bank-status" id="concept-bank-status" role="status"></div></details>';
+ const expanded=window.matchMedia('(min-width:901px)').matches?' open':'';
+ return '<details class="concept-bank" id="concept-bank"'+expanded+'><summary>Concepts in this material ('+count+')</summary><div class="concept-bank-search"><label for="concept-filter">Search concepts</label><input id="concept-filter" data-field="concept_focus" value="'+esc(focus)+'" placeholder="Search a term, definition or section…" autocomplete="off"></div><div class="concept-bank-groups" id="concept-bank-groups"></div><div class="concept-bank-status" id="concept-bank-status" role="status"></div></details>';
 }
 function renderConceptBank(){
  const host=$('concept-bank-groups');if(!host)return;conceptBankStyles();
  const query=String($('concept-filter')?.value||'').trim().toLocaleLowerCase(),catalog=conceptCatalog();
  const entries=catalog.filter(entry=>!query||[entry.name,entry.group,entry.hint].join(' ').toLocaleLowerCase().includes(query));
  const groups=new Map();for(const entry of entries){if(!groups.has(entry.group))groups.set(entry.group,[]);groups.get(entry.group).push(entry);}
- host.innerHTML=[...groups].map(([group,list])=>'<section class="concept-bank-group"><h3>'+esc(group)+'</h3><div class="concept-bank-terms">'+list.map(entry=>'<button type="button" class="concept-bank-term" data-bank-concept="'+esc(entry.name)+'" aria-pressed="'+conceptSelection.includes(entry.name)+'"'+(busy?' disabled':'')+'><strong>'+esc(entry.name)+'</strong>'+(entry.hint?'<small>'+esc(entry.hint)+'</small>':'')+'</button>').join('')+'</div></section>').join('')||'<p class="concept-bank-empty">'+(catalog.length?'No saved concepts match this search. Clear the search to browse all terms, or expand the list from this source.':'No saved concepts yet. Use Expand concept list from source to extract candidates from this material.')+'</p>';
- $('concept-bank-status').textContent=entries.length+' of '+catalog.length+' concepts shown · '+(conceptSelection.length===1?'Choose the related idea next.':'Click two concepts, then describe their relationship.');
- const summary=$('concept-bank')?.querySelector('summary');if(summary)summary.textContent='Browse all saved concepts · '+catalog.length+' available';
+ host.innerHTML=[...groups].map(([group,list])=>'<section class="concept-bank-group"><h3>'+esc(group)+'</h3><div class="concept-bank-terms">'+list.map(entry=>'<button type="button" class="concept-bank-term" data-bank-concept="'+esc(entry.name)+'" aria-pressed="'+conceptSelection.includes(entry.name)+'"'+(busy?' disabled':'')+'><strong>'+esc(entry.name)+'</strong>'+(entry.hint?'<small>'+esc(entry.hint)+'</small>':'')+'</button>').join('')+'</div></section>').join('')||'<p class="concept-bank-empty">'+(catalog.length?'No saved concepts match this search. Clear the search to browse all terms, or find more concepts in this material.':'No saved concepts yet. Choose “Find more concepts in this material” to get started.')+'</p>';
+ $('concept-bank-status').textContent=entries.length+' of '+catalog.length+' shown · '+(conceptSelection.length===1?'Choose the second concept.':'Select two concepts to fill in From and To.');
+ const summary=$('concept-bank')?.querySelector('summary');if(summary)summary.textContent='Concepts in this material ('+catalog.length+')';
 }
 
 const BACKUP_TASKS=['misconceptions','reconstruction','evidence','requirements','methods','recipe','versions','repair'];
@@ -389,7 +390,26 @@ const toolResultSlot=()=>'<div id="tool-results-slot"></div>';
 function sourcePicker(field,label='Use source text'){return '<div class="source-picker"><select id="source-picker-'+field+'" aria-label="Choose source for '+field+'"><option value="">Choose a shared source…</option>'+(typeof learningSources==='function'?learningSources():state.sources).map(s=>'<option value="'+esc(s.id)+'">'+esc(s.title)+'</option>').join('')+'</select><button class="outline-btn" data-fill-source="'+field+'">'+label+'</button></div>';}
 function toolInputView(f){
  if(active==='misconceptions')return '<div class="journal-layout"><aside class="journal-days"><p>YOUR LEARNING TRAIL</p><div class="journal-entry current"><strong>Explain</strong><small>Your own reasoning</small></div><div class="journal-entry"><strong>Compare</strong><small>Check source evidence</small></div><div class="journal-entry"><strong>Reflect</strong><small>Keep the change</small></div></aside><article class="journal-page"><div class="journal-topic"><span>YOUR QUESTION · EDITABLE</span><span>SOURCE-GROUNDED</span></div><textarea class="journal-question" id="f-question" data-field="question" rows="2" aria-label="Your question" placeholder="What do you want to understand?">'+esc(f.question)+'</textarea><p class="mini" style="margin-bottom:17px">Explain the idea before asking for feedback. Your completed answer is shared; this draft stays on your device.</p><label for="f-answer">MY EXPLANATION</label><textarea id="f-answer" data-field="answer" placeholder="Start with your reasoning. What do you expect, and why?">'+esc(f.answer)+'</textarea><div class="journal-foot"><span>Private draft · retained on this device</span><span id="journal-chars">'+f.answer.length+' characters</span></div></article><aside><div class="confidence-panel"><h3>Before the feedback</h3><div class="dial" id="confidence-dial"><div class="dial-inner"><strong id="confidence-value">'+f.confidence+'%</strong><span>CONFIDENCE</span></div></div><div class="confidence-controls"><input id="f-confidence" data-field="confidence" type="range" min="0" max="100" step="5" value="'+f.confidence+'" aria-label="Answer confidence"><p>How certain are you?<br>Notice where confidence and evidence disagree.</p></div></div><div class="journal-tip"><strong>KEEP THE FIRST EXPLANATION.</strong>Completed feedback keeps the answer and the sources used at that moment.</div></aside></div>'+toolResultSlot();
- if(active==='reconstruction')return '<div class="canvas-layout"><article class="canvas-wrap"><header class="canvas-toolbar"><span>YOUR CONCEPT CANVAS</span><span>Choose concepts · describe the relationship</span><button class="quiet" data-tool-action="reset-map">Reset layout</button></header><p class="canvas-challenge" id="reconstruction-challenge">'+esc(latest?.result?.challenge||'1 Browse concepts by section. 2 Choose two ideas and add your relationship. 3 Check your connections against this material.')+'</p>'+conceptBankMarkup()+'<div class="node-board concept-canvas" id="node-board"></div><footer class="canvas-key"><span id="map-count"></span><span>Only your selected concepts are placed here.</span></footer></article><aside class="edge-panel"><h2>Connect two ideas.</h2><p id="concept-setup-note" role="status">From and To include all saved concepts, grouped by source section. Choose ideas you think relate.</p><label for="edge-from">FROM · STARTING IDEA</label><select id="edge-from" data-field="edge_from" aria-label="Relationship start"></select><label for="edge-to">TO · RELATED IDEA</label><select id="edge-to" data-field="edge_to" aria-label="Relationship end"></select><label for="edge-label">RELATIONSHIP · HOW OR WHEN?</label><input id="edge-label" data-field="pending_relation" value="'+esc(f.pending_relation||'')+'" aria-label="Relationship description" placeholder="How does the first idea relate to the second?"><button class="outline-btn" data-action="add-edge">Add this connection +</button><button class="outline-btn" data-action="generate-concepts">Expand concept list from source</button><p class="mini">Expansion adds candidates and keeps your canvas and connections. Use the search field to focus a new extraction. Checking your connections uses the button below.</p><div class="edge-list" id="connections"></div></aside></div>'+toolResultSlot();
+ if(active==='reconstruction')return `<div class="canvas-layout">
+  <section class="concept-browser">
+   <p class="canvas-challenge" id="reconstruction-challenge">${esc(latest?.result?.challenge||'')}</p>
+   ${conceptBankMarkup()}
+  </section>
+  <section class="edge-panel">
+   <h2>Connect two ideas</h2>
+   <p id="concept-setup-note" role="status"></p>
+   <label for="edge-from">From</label><select id="edge-from" data-field="edge_from" aria-label="Relationship start"></select>
+   <label for="edge-to">To</label><select id="edge-to" data-field="edge_to" aria-label="Relationship end"></select>
+   <label for="edge-label">How are they related?</label><input id="edge-label" data-field="pending_relation" value="${esc(f.pending_relation||'')}" aria-label="Relationship description" placeholder="Describe the connection in your own words">
+   <button class="outline-btn" data-action="add-edge">Add this connection</button>
+   <button class="quiet" data-action="generate-concepts">Find more concepts in this material</button>
+   <div class="edge-list" id="connections"></div>
+  </section>
+  <article class="canvas-wrap">
+   <header class="canvas-toolbar"><h2>Concept map</h2><button class="quiet" data-tool-action="reset-map">Reset layout</button></header>
+   <div class="node-board concept-canvas" id="node-board"></div>
+   <footer class="canvas-key"><span id="map-count"></span></footer>
+  </article></div>`+toolResultSlot();
  if(active==='evidence')return '<div class="claim-banner"><div class="claim-symbol">'+icon('evidence')+'</div><div class="claim-input"><div class="eyebrow">CLAIM UNDER INVESTIGATION</div><textarea id="f-claim" data-field="claim" rows="2" aria-label="Claim to investigate" placeholder="What claim should your sources support or challenge?">'+esc(f.claim)+'</textarea></div><span class="page-kind">'+(typeof learningSources==='function'?learningSources():state.sources).length+' selected source</span></div>'+toolResultSlot()+'<div id="evidence-empty" class="evidence-board"><section class="evidence-lane"><div class="lane-head">Supporting <span>—</span></div><p class="mini">Source passages that support the claim.</p></section><section class="evidence-lane conflict"><div class="lane-head">Challenging <span>—</span></div><p class="mini">Counterevidence, conditions and conflicts.</p></section><section class="evidence-lane gap"><div class="lane-head">Unresolved <span>—</span></div><p class="mini">What your current materials do not establish.</p></section></div><p class="notice">The map covers your supplied materials. It does not establish consensus across the academic literature.</p>';
  if(active==='requirements')return '<div class="assignment-layout"><aside class="brief"><div class="eyebrow">YOUR ACTUAL ASSIGNMENT BRIEF</div><h2>Keep the requirements<br>beside the draft.</h2>'+sourcePicker('brief','Use this brief')+toolField('INSTRUCTIONS / RUBRIC','brief',f.brief,9,'Paste the original assignment instructions.')+'<p class="mini">Only explicit rules are checked. Unknown counting conventions stay unknown; no grade is assigned.</p></aside><article class="draft-panel"><header class="draft-tools"><strong>YOUR SUBMISSION DRAFT</strong><span>Private until you run the check</span></header><textarea id="f-submission" data-field="submission" rows="12" aria-label="Submission draft" placeholder="Write or paste the text you want to check.">'+esc(f.submission)+'</textarea><footer class="draft-foot"><div id="word-count"></div></footer></article></div>'+toolResultSlot();
  if(active==='methods')return '<div class="notice"><strong>YOUR OWN STUDY · METHOD FIT</strong><p>Your research question sets the aim. This review compares your proposed data, design and method with the conditions described in your selected material.</p><button class="text-btn" data-learning-action="open-pack" data-pack-section="notes">Read the uploaded paper’s outline in Study notes ↗</button></div><div class="method-route"><div class="method-stop"><small>01 / AIM</small><h3>Set your research aim</h3><p>What do you want to find out?</p></div><div class="method-arrow">→</div><div class="method-stop"><small>02 / DESIGN</small><h3>Describe your plan</h3><p>What data will you collect, and how?</p></div><div class="method-arrow">→</div><div class="method-stop"><small>03 / METHOD FIT</small><h3>Review the conditions</h3><p>What fits, conflicts or needs detail?</p></div></div><div class="method-layout"><article class="panel"><div class="panel-title"><h2>Review your proposed study.</h2><span class="pill">Research aim → design → method</span></div>'+toolField('MY RESEARCH QUESTION / AIM · CONTEXT (OPTIONAL)','question',f.question,2,'What do you want your study to find out?')+toolField('MY DATA COLLECTION / RESEARCH DESIGN','design',f.design,4,'Describe your participants or data, measurements, comparison and collection process.')+toolField('MY PLANNED METHOD','method',f.method,2,'Which method do you plan to use, and what do you want it to show?')+'</article><aside class="method-card"><div class="eyebrow">DESIGN DETAILS</div><h2>Make the<br>conditions visible.</h2><p>Describe what you know about sampling, measurements and comparisons. The result identifies conditions your plan addresses, design conflicts to resolve and details you still need.</p>'+toolField('WHAT I KNOW / STILL NEED TO CONFIRM','conditions',f.conditions||'',5,'List the design facts you know and the details you still need to check.')+'<p>The selected material supplies method requirements. Your description supplies the proposed study details.</p></aside></div>'+toolResultSlot();
@@ -427,9 +447,10 @@ function drawBoard(){
  for(const id of ['edge-from','edge-to']){$(id).innerHTML=options;$(id).disabled=available.length<2||busy;}
  $('edge-from').value=available.includes(from)?from:available[0]||'';$('edge-to').value=available.includes(to)?to:available[1]||available[0]||'';
  document.querySelector('[data-action="add-edge"]').disabled=available.length<2||busy;
- $('concept-setup-note').textContent=available.length<2?'At least two source concepts are needed. Expand the list from this material to prepare candidates.':'From and To include all '+available.length+' saved concepts. Browse their sections, describe how or when two ideas relate, then add the connection.';
+ $('concept-setup-note').textContent=available.length<2?'Find at least two concepts in this material to start a map.':'Choose two concepts from this material and describe the link between them.';
  if(!concepts.length){
-  board.innerHTML='<div class="canvas-empty">'+icon('nodes')+'<h3>'+(available.length?'Choose the ideas you want to connect.':'Prepare concepts from this material.')+'</h3><p>'+(available.length?'Browse the concept list above or use From and To. Add your relationship to place the two ideas here.':'Use Expand concept list from source to extract meaningful candidates, then choose the ideas you want to connect.')+'</p></div>';
+  board.style.removeProperty('height');
+  board.innerHTML='<div class="canvas-empty">'+icon('nodes')+'<h3>Your map starts with one connection</h3><p>Each connection you add appears here. Drag a concept to arrange it.</p></div>';
  }else{
   const narrow=board.clientWidth<500,columns=narrow?2:4,rows=Math.ceil(concepts.length/columns),grid=concepts.length>(narrow?4:8);
   board.style.height=grid?Math.max(420,rows*110+80)+'px':'420px';
@@ -442,10 +463,16 @@ function drawBoard(){
 }
 function selectConcept(name){
  if(busy)return;const names=availableConceptNames();if(!names.includes(name))return;
+ const trigger=document.activeElement;
  conceptSelection=conceptSelection.includes(name)?conceptSelection.filter(value=>value!==name):[...conceptSelection.slice(-1),name];
  if(conceptSelection[0])$('edge-from').value=conceptSelection[0];
- if(conceptSelection[1]){$('edge-to').value=conceptSelection[1];$('edge-label').focus({preventScroll:true});}
+ if(conceptSelection[1])$('edge-to').value=conceptSelection[1];
  form().edge_from=$('edge-from').value;form().edge_to=$('edge-to').value;save();drawBoard();
+ if(conceptSelection[1])$('edge-label').focus();
+ else if(trigger?.matches('[data-bank-concept],[data-concept]')){
+  const attribute=trigger.hasAttribute('data-bank-concept')?'data-bank-concept':'data-concept';
+  document.querySelector('['+attribute+'="'+CSS.escape(name)+'"]')?.focus({preventScroll:true});
+ }
 }
 function toolItems(items,labels=STATES){return (items||[]).map(i=>'<article class="result-item"><header><span class="state-dot '+esc(i.state)+'"></span><h3>'+esc(i.title)+'</h3><span class="tag gray">'+esc(labels[i.state]||'Source analysis')+'</span></header><p>'+esc(i.detail||'')+'</p>'+(i.evidence||[]).map(evidenceButton).join('')+(i.source_note?'<div class="source-missing">'+esc(i.source_note)+'</div>':'')+'</article>').join('');}
 function toolResultBody(record){
@@ -591,8 +618,27 @@ syncGroup();setInterval(()=>{if(!document.hidden)syncGroup();},5000);window.addE
 <p class="upload-disclosure">Selecting a file starts automation and saves the original file, extracted text and generated learning pack to your shared group. Keep this page open while it runs.</p><p class="intake-status" id="intake-status">Checking Automatic Intake connection…</p>
 <div class="intake-links"><a id="intake-dify-link" href="https://udify.app/workflow/pyZNp2hS6XUkS6pR" target="_blank" rel="noopener">Open Dify intake workflow ↗</a><a href="https://udify.app/workflow/vthwvvduXupkKc7N" target="_blank" rel="noopener">Open eight-tool workflow ↗</a><a href="https://drive.google.com/drive/folders/1QaGZjZ9IGYxsyd4R4VNqcav9QoUAfInn" target="_blank" rel="noopener">Open Google Drive Inbox ↗</a></div>
 <div class="intake-connection">Group uploads and completed learning packs sync to this cloud workspace. Original files can be opened from Source settings. The owner’s separate Google Drive inbox runs every five minutes; it does not automatically import files into this group and retains its separate file limits.</div>
-<div id="intake-queue" class="intake-queue" aria-live="polite"></div><div id="learning-pack"></div>
+<div id="intake-queue" class="intake-queue" aria-live="polite"></div>
 </div></dialog>
+<dialog id="learning-pack" aria-labelledby="pack-title">
+ <header class="modal-head">
+  <div class="pack-heading"><span class="pack-format">Learning pack</span><h2 id="pack-title"></h2><p id="pack-meta"></p></div>
+  <button type="button" data-close="learning-pack" aria-label="Close learning pack">×</button>
+ </header>
+ <div class="pack-sections" role="group" aria-label="Learning pack sections">
+  <button type="button" data-pack-view="notes" aria-controls="pack-page">Study notes</button>
+  <button type="button" data-pack-view="cards" aria-controls="pack-page">Evidence cards</button>
+  <button type="button" data-pack-view="reference" aria-controls="pack-page">Reference</button>
+ </div>
+ <section id="pack-page" tabindex="0"></section>
+ <footer class="pack-footer">
+  <button class="primary" type="button" data-revise-source>Check my understanding</button>
+  <details class="pack-exports"><summary>Export</summary><div>
+   <button type="button" data-notes-export>Notes (.md)</button>
+   <button type="button" data-pack-export>Learning pack (.json)</button>
+  </div></details>
+ </footer>
+</dialog>
 <script>
 const INTAKE_LIMITS={bytes:50*1024*1024,pages:300,characters:500000,partCharacters:10000};
 function pdfReferenceMetadata(info={},firstPageText=''){
@@ -729,7 +775,7 @@ async function processIntakeQueue(){
    const firstConcept=job.pack.sections.flatMap(section=>(section.terms||[]).map(term=>term.en||term.zh)).find(Boolean);
    state.learningDrafts=state.learningDrafts||{};state.learningDrafts[source.id]=state.learningDrafts[source.id]||{forms:firstConcept?{misconceptions:{question:'Explain '+firstConcept+' and the conditions under which it applies.',answer:'',confidence:50}}:{},concepts:[],connections:[]};
    if(typeof selectLearningSource==='function')selectLearningSource(source.id);
-   delete state.intakeDrafts[job.id];save();if(!busy)render();else if(typeof renderLearningPath==='function')renderLearningPath();intakeQueue();showPack(job.id);
+   delete state.intakeDrafts[job.id];save();if(!busy)render();else if(typeof renderLearningPath==='function')renderLearningPath();intakeQueue();
   }catch(error){job.status='failed';job.error=error.message+(difyRequested?' '+(job.parts_done?'Completed parts are kept on this device. ':'')+'If this part timed out, check its Dify run log before resuming.':' No Dify processing was started. Select the file again after fixing the connection or file issue.');save();intakeQueue();}
   finally{pendingIntake.delete(job.id);}
  }intakeBusy=false;toast('Processing queue finished. Open completed learning packs below.');
@@ -739,13 +785,59 @@ function packCardEvidence(job,card){
  attachEvidenceLocations({items:[{evidence:[evidence]}]},source?[source]:[]);return evidence;
 }
 function openPackCard(id,index){const job=state.intakeJobs.find(job=>job.id===id),card=job?.pack?.cards?.[index];if(card)showSourceEvidence(packCardEvidence(job,card),state.sources);}
-function showPack(id){
- const job=state.intakeJobs.find(j=>j.id===id);if(!job?.pack)return;const p=job.pack,r=p.reference;
- const referenceHTML='<h4 data-pack-anchor="reference">Reference</h4><p class="reference-citation">'+esc(r.apa||r.source_reference||'Citation incomplete — only known fields were retained.')+'</p>'+(r.apa?'':r.source_reference?'<p>Source-derived reference · APA formatting has not been verified.</p>':'')+'<dl class="reference-fields"><dt>Title</dt><dd>'+esc(r.title||'Not identified')+'</dd><dt>Author(s)</dt><dd>'+esc(r.authors?.join('; ')||'Not identified')+'</dd><dt>Year</dt><dd>'+esc(r.year||'Not identified')+'</dd></dl><p>'+esc(r.doi?'DOI: '+r.doi:'No verified document DOI')+' · '+esc(r.status)+'</p>'+(r.document_metadata_provider?'<p>Known fields: '+esc(r.document_metadata_provider)+'</p>':'')+(r.missing_fields?.length?'<p>Missing: '+r.missing_fields.map(esc).join(', ')+'</p>':'');
- $('learning-pack').innerHTML='<section class="pack-section"><div class="kicker">AUTOMATION COMPLETE</div><h3>'+esc(p.source_title)+'</h3><p>'+esc(p.source_id)+' · '+esc(p.project)+(p.processing?' · '+p.processing.parts+' parts · '+p.processing.page_count+' '+esc(p.processing.location_kind)+'s':'')+'</p><h4 data-pack-anchor="notes">Study notes</h4>'+p.sections.map(s=>'<h4>'+esc(s.heading)+'</h4><p>'+esc(s.summary_en)+'</p><p>'+esc(s.explanation_zh)+'</p>').join('')+'<h4 data-pack-anchor="cards">Verified evidence cards · '+p.cards.length+'</h4>'+p.cards.map((c,index)=>'<div class="repair-hit"><small>'+esc(c.card_id)+' · '+esc(evidenceLocationLabel(packCardEvidence(job,c)))+'</small><blockquote class="modal-source-quote">'+esc(c.original_text)+'</blockquote><p>'+esc(c.chinese_explanation)+'</p><button class="outline-btn" data-pack-card="'+esc(id)+'" data-card-index="'+index+'">Read matched source page ↗</button></div>').join('')+referenceHTML+(p.warnings?.length?'<div class="missing">'+p.warnings.map(esc).join('<br>')+'</div>':'')+'<div class="result-tools"><button class="outline-btn" data-pack-export="'+esc(id)+'">Export learning pack JSON</button><button class="outline-btn" data-notes-export="'+esc(id)+'">Export notes Markdown</button></div></section>';
- $('learning-pack').firstElementChild.insertAdjacentHTML('afterbegin','<div class="pack-next"><div><strong>Your learning pack is ready.</strong><p>Choose one idea, explain it in your words, then check it against the original.</p></div><button class="primary" data-revise-source="'+esc(job.source_id)+'">Check my understanding '+icon('arrow')+'</button></div>');
-
+function showPack(id, section='notes'){
+ const job=state.intakeJobs.find(item=>item.id===id);
+ if(!job?.pack)return;
+ const reader=$('learning-pack'),pack=job.pack;
+ const views=reader.querySelectorAll('[data-pack-view]');
+ const selected=Array.from(views).find(button=>button.dataset.packView===section)||views[0];
+ for(const button of views)button.setAttribute('aria-pressed',String(button===selected));
+ reader.dataset.job=id;
+ $('pack-title').textContent=pack.source_title||job.name;
+ $('pack-meta').textContent=[pack.project,pack.source_id].filter(Boolean).join(' · ');
+ reader.querySelector('[data-revise-source]').dataset.reviseSource=job.source_id;
+ reader.querySelector('[data-pack-export]').dataset.packExport=id;
+ reader.querySelector('[data-notes-export]').dataset.notesExport=id;
+ reader.querySelector('.pack-exports').open=false;
+ const page=$('pack-page');
+ page.setAttribute('aria-label',selected.textContent);
+ if(selected.dataset.packView==='notes'){
+  page.innerHTML=(pack.sections||[]).map(note=>`
+   <article class="pack-note"><h3>${esc(note.heading)}</h3>
+    ${note.summary_en?'<p>'+esc(note.summary_en)+'</p>':''}
+    ${note.explanation_zh?'<p lang="zh" class="pack-translation">'+esc(note.explanation_zh)+'</p>':''}
+   </article>`).join('')||'<p class="pack-empty">This material has no saved note sections.</p>';
+ }else if(selected.dataset.packView==='cards'){
+  page.innerHTML=(pack.cards||[]).map((card,index)=>{
+   const evidence=packCardEvidence(job,card);
+   return `<article class="pack-evidence"><small>${esc(evidenceLocationLabel(evidence))}</small>
+    <blockquote>${esc(card.original_text)}</blockquote>
+    ${card.chinese_explanation?'<p lang="zh">'+esc(card.chinese_explanation)+'</p>':''}
+    <button type="button" class="outline-btn" data-pack-card="${esc(id)}" data-card-index="${index}">View source passage</button>
+   </article>`;
+  }).join('')||'<p class="pack-empty">No source quotations were saved for this material.</p>';
+ }else{
+  const r=pack.reference||{};
+  const fields=[['Title',r.title],['Authors',r.authors?.join('; ')],['Year',r.year],['DOI',r.doi]];
+  page.innerHTML=`<div class="pack-reference"><h3>Citation</h3>
+   <p class="reference-citation">${esc(r.apa||r.source_reference||'Citation incomplete.')}</p>
+   ${!r.apa&&r.source_reference?'<p>Source-derived reference · APA formatting unverified.</p>':''}
+   <dl class="reference-fields">${fields.map(([key,value])=>'<dt>'+key+'</dt><dd>'+esc(value||'Not identified')+'</dd>').join('')}</dl>
+   ${r.status?'<p>Reference status · '+esc(r.status)+'</p>':''}
+   ${r.document_metadata_provider?'<p>Known fields · '+esc(r.document_metadata_provider)+'</p>':''}
+   ${r.missing_fields?.length?'<p>Missing fields · '+r.missing_fields.map(esc).join(', ')+'</p>':''}
+   </div>`;
+ }
+ if(pack.warnings?.length){
+  page.insertAdjacentHTML('beforeend','<details class="pack-processing-notes"><summary>Processing notes</summary><ul>'+pack.warnings.map(note=>'<li>'+esc(note)+'</li>').join('')+'</ul></details>');
+ }
+ if(!reader.open)reader.showModal();
+ page.scrollTop=0;
 }
+$('learning-pack').addEventListener('click',event=>{
+ const button=event.target.closest('[data-pack-view]');
+ if(button)showPack($('learning-pack').dataset.job,button.dataset.packView);
+});
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.action==='intake')openIntake();if(b.dataset.pack)showPack(b.dataset.pack);if(b.dataset.packCard)openPackCard(b.dataset.packCard,Number(b.dataset.cardIndex));if(b.dataset.resumeIntake){if(intakeBusy)return toast('Wait for the current file to finish.');const j=state.intakeJobs.find(j=>j.id===b.dataset.resumeIntake);if(j){j.status='queued';save();processIntakeQueue();}}if(b.dataset.packExport){const j=state.intakeJobs.find(j=>j.id===b.dataset.packExport);if(j)exportFile(j.source_id+'_learning_pack.json',j.pack);}if(b.dataset.notesExport){const j=state.intakeJobs.find(j=>j.id===b.dataset.notesExport);if(j)exportFile(j.source_id+'_notes.md',j.notes_markdown,'text/markdown;charset=utf-8');}});
 $('intake-files').addEventListener('change',e=>{enqueueFiles(Array.from(e.target.files));e.target.value='';});
 const drop=$('intake-drop');drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('dragover');});drop.addEventListener('dragleave',()=>drop.classList.remove('dragover'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('dragover');enqueueFiles(Array.from(e.dataTransfer.files));});
@@ -814,7 +906,7 @@ if(location.hash==='#tutorial')openTutorial();
 <div class="home-hero"><article class="home-welcome"><div class="home-eyebrow">READ · QUESTION · CONNECT</div><h2>From source to<br>understanding.</h2><p>Bring your course materials into one shared library. Turn them into notes, traceable evidence and practice your group can return to.</p><div class="home-actions"><button class="primary" data-action="intake">Upload a material ↗</button><button class="text-btn" id="home-tour">Take a visual tour →</button></div><div class="home-tags"><span>ENGLISH STUDY NOTES</span><span>SOURCE-MATCHED EVIDENCE</span><span>SHARED PRACTICE</span></div></article><article class="home-journey"><div class="home-journey-head"><h2>Your next small steps</h2><span>HOW IT WORKS</span></div><div class="home-step" id="home-step-source"><span class="home-step-number">01</span><div><strong>Bring a source</strong><p>Upload a short PDF, PPTX, TXT or Markdown.</p></div></div><div class="home-step" id="home-step-pack"><span class="home-step-number">02</span><div><strong>Make it reusable</strong><p>Get ordered notes, evidence and references.</p></div></div><div class="home-step" id="home-step-practice"><span class="home-step-number">03</span><div><strong>Put understanding to work</strong><p>Explain, question and connect with your group.</p></div></div></article></div>
 <div class="home-stats"><div class="home-stat"><strong id="home-source-count">0</strong><span>SHARED SOURCES</span></div><div class="home-stat"><strong id="home-pack-count">0</strong><span>LEARNING PACKS</span></div><div class="home-stat"><strong id="home-practice-count">0</strong><span>COMPLETED PRACTICE</span></div><div class="home-stat cloud"><strong id="home-sync">Connecting…</strong><span>YOUR GROUP WORKSPACE</span></div></div>
 <div class="home-section-head"><h2>Choose a way to think.</h2><p>Eight tools. One source library.</p></div><div class="home-tools" id="home-tools"></div>
-<div class="home-lower"><article class="home-panel"><div class="home-section-head"><h2>Your source shelf</h2><button class="text-btn" data-action="sources">Manage →</button></div><div id="home-source-list"></div></article><article class="home-panel"><div class="home-section-head"><h2>Recent group practice</h2><button class="text-btn" id="home-practice-open">Open history →</button></div><div id="home-activity"></div></article></div>
+<div class="home-lower"><article class="home-panel"><div class="home-section-head"><h2>Recent materials</h2><button class="text-btn" data-action="sources">View library</button></div><div id="home-source-list"></div></article><article class="home-panel"><div class="home-section-head"><h2>Recent practice</h2><button class="text-btn" id="home-practice-open">View history</button></div><div id="home-activity"></div></article></div>
 </section>
 <script>
 function studioHomeVisible(){return document.body.classList.contains('studio-home');}
@@ -824,9 +916,8 @@ function updateStudioOverview(){
  const packs=(state.intakeJobs||[]).filter(j=>j.status==='completed').length;
  const practice=state.history.filter(h=>h.record_type!=='study_session');
  $('home-source-count').textContent=state.sources.length;$('home-pack-count').textContent=packs;$('home-practice-count').textContent=practice.length;$('home-sync').textContent=$('sync-label').textContent;
- $('home-source-list').innerHTML=state.sources.length?state.sources.slice(-3).reverse().map(s=>'<div class="home-list-row"><div><strong>'+esc(s.title)+'</strong><small>'+esc(s.id)+' · '+esc(s.author||'Group source')+'</small></div><span>Shared ↗</span></div>').join(''):'<div class="home-empty">'+icon('folder')+'<div><strong>A place for your first source.</strong><p>Nothing preloaded. Upload your own material, or paste source text through Manage.</p><button class="text-btn" data-action="intake">Add your first material →</button></div></div>';
- $('home-activity').innerHTML=practice.length?practice.slice(-3).reverse().map(h=>'<div class="home-list-row"><div><strong>'+esc(h.result?.title||META[h.task]?.[0]||'Completed practice')+'</strong><small>'+esc(h.author||'Group member')+' · '+esc(META[h.task]?.[0]||h.task)+'</small></div><span>'+esc(new Date(h.at).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}))+'</span></div>').join(''):'<div class="home-empty">'+icon('clock')+'<div><strong>Make your learning visible.</strong><p>Completed practice will appear here with the contributor and source context. Drafts stay on your own device.</p><button class="text-btn" data-go="misconceptions">Start a first explanation →</button></div></div>';
- if(typeof updateInteractionStudio==='function')updateInteractionStudio();
+ $('home-source-list').innerHTML=state.sources.length?state.sources.slice(-3).reverse().map(s=>'<button class="home-list-row" data-learning-source="'+esc(s.id)+'"'+(busy?' disabled':'')+'><span class="home-list-copy"><strong>'+esc(s.title)+'</strong><small>'+esc(s.author||'Group source')+'</small></span><span aria-hidden="true">→</span></button>').join(''):'<p class="home-empty">New materials will appear here.</p>';
+ $('home-activity').innerHTML=practice.length?practice.slice(-3).reverse().map(h=>'<button class="home-list-row" data-open-practice="'+esc(h.id)+'"><span class="home-list-copy"><strong>'+esc(h.result?.title||META[h.task]?.[0]||'Completed practice')+'</strong><small>'+esc(h.author||'Group member')+' · '+esc(META[h.task]?.[0]||h.task)+'</small></span><span>'+esc(new Date(h.at).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}))+'</span></button>').join(''):'<p class="home-empty">Completed practice from your group will appear here.</p>';
  if(studioHomeVisible())$('crumb').textContent='Overview';
  const name=groupMember();document.querySelector('.avatar').textContent=name==='Group member'?'SF':name.slice(0,2).toUpperCase();
 }
@@ -848,14 +939,14 @@ setStudioHome(!location.hash||location.hash==='#home');updateStudioOverview();
 </style>
 <dialog id="spotlight-tour" aria-labelledby="spotlight-title" aria-describedby="spotlight-copy"><div class="spotlight-blocker"></div><div class="spotlight-hole" id="spotlight-hole" aria-hidden="true"></div><section class="spotlight-panel" id="spotlight-panel"><div class="spotlight-eyebrow"><span id="spotlight-category"></span><span id="spotlight-count"></span></div><h2 id="spotlight-title"></h2><p id="spotlight-copy"></p><p class="spotlight-hint" id="spotlight-hint"></p><div class="spotlight-progress" id="spotlight-progress" aria-hidden="true"></div><div class="spotlight-controls"><button class="text-btn" id="spotlight-back">← Back</button><button class="primary" id="spotlight-next">Next →</button></div><div class="spotlight-footer"><span>← → to navigate · Esc to exit</span><button id="spotlight-skip">Skip tour</button></div></section></dialog>
 <script>
-const SPOTLIGHT_SEEN='scholarflow-spotlight-v2';
+const spotlightMaterial=()=>document.getElementById('learning-revision-start')?'#learning-path':'#home-upload-zone';
 const spotlightSteps=[
- {target:'#learning-path',category:'ONE FILE → ONE USEFUL TASK',title:'Let automation prepare the material.',copy:'Upload once to save the original, read and split its text, and prepare notes, evidence cards and known reference information. Keep the page open while it processes.',hint:'This walkthrough makes no AI calls and creates no learning records.'},
- {target:()=>document.getElementById('learning-revision-start')?'#learning-revision-start':'.home-welcome [data-action="intake"]',category:'YOUR FIRST TASK',title:'Revise one idea from this lecture.',copy:'Check my understanding opens a guided task against the selected material. You do not need to choose between eight tools first.',hint:'If the library is empty, upload your own material before starting.'},
+ {target:spotlightMaterial,category:'COURSE MATERIALS',title:'Prepare a learning pack.',copy:'Upload a course file to prepare notes, evidence cards and a reference. Keep this tab open while it processes.',hint:'Your group can revisit the original file and the finished pack.'},
+ {target:()=>document.getElementById('learning-revision-start')?'#learning-revision-start':'#browse-course-files',category:'YOUR FIRST TASK',title:'Explain one idea from the material.',copy:'Check my understanding opens an exercise based on your selected material.',hint:'If the library is empty, upload a course file first.'},
  {task:'misconceptions',target:'#f-question',category:'1 / CHOOSE A QUESTION',title:'What do you want to understand?',copy:'Pick a question starter from your actual notes or type your own question. Focus on one concept, relationship or condition.',hint:'The guide can prepare a question. You remain the author of the answer.'},
  {task:'misconceptions',target:'#f-answer',category:'2 / EXPLAIN FIRST',title:'Write your own reasoning.',copy:'Explain what you think the idea means and why. An uncertain explanation gives you something useful to compare with the feedback.',hint:'This draft stays on your device until you submit the task. Existing answers are kept.'},
  {task:'misconceptions',target:'#run-button',category:'3 / GET FEEDBACK',title:'Run the task when you are ready.',copy:'Get feedback on my explanation uses the existing model and selected material. It saves your explanation, source snapshot and returned feedback to group history.',hint:'After the result arrives, open the original passage. A quotation match does not guarantee a correct interpretation.'},
- {target:'#learning-path',category:'4 / KEEP YOUR REVISION',title:'Save what you would explain differently.',copy:'Below completed feedback, write your revised understanding and save the reflection. Return to the same material later and record your actual time, checks and difficulties in a study session.',hint:'Saved results and reflections are shared. Opening the original alone does not prove that you understood it.'},
+ {target:spotlightMaterial,category:'4 / KEEP YOUR REVISION',title:'Save what you would explain differently.',copy:'Below completed feedback, write your revised understanding and save the reflection. Return to the same material later and record your actual time, checks and difficulties in a study session.',hint:'Your group can revisit saved results and reflections.'},
  {target:'#sync-label',category:'READY FOR YOUR REAL TASK',title:'Your group can return to the same work.',copy:'Wait for Cloud synced after saving. Your teammate can read the material, completed feedback and saved revision through the same full group link.',hint:'Choose Start my task to leave this walkthrough and begin. No model runs until you submit your explanation.'}
 ];
 let spotlightIndex=0,spotlightOrigin=null,spotlightTarget=null,spotlightFrame=0;
@@ -894,18 +985,17 @@ function startSpotlightTour(){
  if(typeof setStudioHome==='function')setStudioHome(true);
  document.querySelectorAll('dialog[open]').forEach(d=>d.close());spotlightIndex=0;$('spotlight-tour').showModal();spotlightDraw();
 }
-function stopSpotlightTour(status='skipped'){
+function stopSpotlightTour(){
  if(!$('spotlight-tour').open)return;
- localStorage.setItem(SPOTLIGHT_SEEN,status);cancelAnimationFrame(spotlightFrame);$('spotlight-tour').close();document.querySelectorAll('.spotlight-nav-marker').forEach(e=>e.classList.remove('spotlight-nav-marker'));
+ cancelAnimationFrame(spotlightFrame);$('spotlight-tour').close();document.querySelectorAll('.spotlight-nav-marker').forEach(e=>e.classList.remove('spotlight-nav-marker'));
  if(spotlightOrigin){capture();active=spotlightOrigin.active;render();if(typeof setStudioHome==='function')setStudioHome(spotlightOrigin.home);window.scrollTo({left:spotlightOrigin.x,top:spotlightOrigin.y,behavior:'instant'});if(spotlightOrigin.focus?.isConnected)spotlightOrigin.focus.focus({preventScroll:true});}
 }
-function spotlightNext(){if(spotlightIndex===spotlightSteps.length-1){stopSpotlightTour('done');learningBeginRevision();}else{spotlightIndex++;spotlightDraw();}}
+function spotlightNext(){if(spotlightIndex===spotlightSteps.length-1){stopSpotlightTour();learningBeginRevision();}else{spotlightIndex++;spotlightDraw();}}
 $('spotlight-next').onclick=spotlightNext;$('spotlight-back').onclick=()=>{if(spotlightIndex){spotlightIndex--;spotlightDraw();}};$('spotlight-skip').onclick=()=>stopSpotlightTour();
 $('spotlight-tour').addEventListener('cancel',e=>{e.preventDefault();stopSpotlightTour();});
 $('spotlight-tour').addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();spotlightNext();}if(e.key==='ArrowLeft'&&spotlightIndex){e.preventDefault();spotlightIndex--;spotlightDraw();}});
 window.addEventListener('resize',spotlightSchedule);window.addEventListener('scroll',spotlightSchedule,true);
 const visualTourButton=document.createElement('button');visualTourButton.className='text-btn';visualTourButton.textContent='Show the task steps →';visualTourButton.id='start-visual-tour';visualTourButton.onclick=startSpotlightTour;document.querySelector('.tutorial-entry').append(visualTourButton);
-setTimeout(()=>{if(location.hash!=='#tutorial'&&!localStorage.getItem(SPOTLIGHT_SEEN)&&!busy&&!intakeBusy)startSpotlightTour();},850);
 </script>
 
 <style>
@@ -936,21 +1026,15 @@ function studioReadSource(id,fromRun=false){
  container.querySelector('#source-reader-page')?.addEventListener('change',event=>showPage(Number(event.target.value)));showPage(0);if(!$('source-reader').open)$('source-reader').showModal();
 }
 function studioOpenPractice(id){if(busy)return toast('Wait for the current task to finish.');const record=state.history.find(h=>h.id===id);if(!record||record.record_type==='study_session')return toast('Open student records from Record this study session in the material workspace.');capture();const sourceId=record.workflow?.source_id||(record.sources||[]).find(s=>state.sources.some(source=>source.id===s.id))?.id;if(sourceId&&typeof selectLearningSource==='function')selectLearningSource(sourceId);if(record.record_type==='mcq_session'){openMCQ(record.id);return;}const reveal=()=>{active=record.task;render();setStudioHome(false);latest=record;showResult();requestAnimationFrame(()=>$('result-section').scrollIntoView({behavior:'smooth',block:'start'}));};if(location.hash==='#'+record.task)reveal();else{window.addEventListener('hashchange',reveal,{once:true});location.hash=record.task;}}
-function updateInteractionStudio(){
- const sources=state.sources.slice(-3).reverse();document.querySelectorAll('#home-source-list .home-list-row').forEach((row,i)=>{const source=sources[i];if(!source)return;row.setAttribute('role','button');row.tabIndex=0;row.dataset.readSource=source.id;row.setAttribute('aria-label','Read '+source.title);row.querySelector('span').textContent='Read ↗';});
- const records=state.history.filter(h=>h.record_type!=='study_session').slice(-3).reverse();document.querySelectorAll('#home-activity .home-list-row').forEach((row,i)=>{if(!records[i])return;row.setAttribute('role','button');row.tabIndex=0;row.dataset.openPractice=records[i].id;});
-}
 document.addEventListener('click',e=>{
  const b=e.target.closest('button,a,[data-read-source],[data-open-practice]');if(!b)return;
  if(b.dataset.intent)studioSetIntent(b.dataset.intent);
  if(b.dataset.readSource)studioReadSource(b.dataset.readSource);
  if(b.dataset.openPractice)studioOpenPractice(b.dataset.openPractice);
- if(b.dataset.openPack){openIntake();showPack(b.dataset.openPack);$('learning-pack').scrollIntoView({block:'start',behavior:'smooth'});}
+ if(b.dataset.openPack)showPack(b.dataset.openPack);
  if(b.dataset.sourcePractice){if(b.dataset.practiceSource&&!state.sources.some(s=>s.id===b.dataset.practiceSource))return toast('This is a historical snapshot. Add this material back to the library before starting new practice.');if(busy)return toast('Wait for the current task to finish.');$('source-reader').close();capture();if(b.dataset.practiceSource&&typeof selectLearningSource==='function')selectLearningSource(b.dataset.practiceSource);active=b.dataset.sourcePractice;location.hash=active;render();setStudioHome(false);$('view').scrollIntoView({block:'start',behavior:'smooth'});}
 
 });
-document.addEventListener('keydown',e=>{if(!['Enter',' '].includes(e.key)||!e.target.matches('.home-list-row[role=button]'))return;e.preventDefault();e.target.click();});
-updateInteractionStudio();
 </script>
 
 <style>
@@ -993,6 +1077,34 @@ body:not(:has(#spotlight-tour[open])) .automation-banner,body:not(:has(#spotligh
 .claim-input textarea{min-height:75px}
 .intro h1,.result-heading h2{overflow-wrap:anywhere}
 @media(max-width:720px){.journal-page .journal-question{font-size:21px;min-height:70px}.groupbar{margin:0;padding:10px 0;gap:9px}.groupbar-actions{gap:15px}.intro{padding-top:20px}}
+.tool-result .learning-next-step{overflow-wrap:anywhere}
+.ui-refined .canvas-layout{
+ grid-template-areas:"terms editor" "map editor";
+ grid-template-rows:auto 1fr;
+ align-items:start;
+}
+.canvas-layout .concept-browser{
+ grid-area:terms;min-width:0;overflow:hidden;
+ background:white;border:1px solid var(--line);border-radius:14px;
+}
+.concept-browser .concept-bank{border-bottom:0}
+.concept-browser .canvas-challenge:empty{display:none}
+.canvas-layout .canvas-wrap{grid-area:map;min-width:0}
+.canvas-layout .edge-panel{grid-area:editor;min-width:0}
+.canvas-toolbar h2{margin:0;font:650 16px/1.4 var(--sans);color:var(--ink)}
+.canvas-layout .canvas-toolbar button{min-height:36px}
+.canvas-layout .concept-canvas{touch-action:pan-y}
+.canvas-layout .concept-node{overflow-wrap:anywhere}
+.canvas-layout .edge-panel .quiet{display:block;min-height:44px;margin:5px auto 0}
+.canvas-layout .edge-panel .outline-btn[data-action=add-edge]{background:#355b48;color:white;border-color:#355b48}
+.canvas-layout .edge-panel .outline-btn[data-action=add-edge]:hover:enabled{background:#284a3a}
+.canvas-layout .edge-panel .outline-btn[data-action=add-edge]:disabled{opacity:.5}
+.canvas-layout .edge-list:empty{display:none}
+.canvas-layout .edge-list>div>span{overflow-wrap:anywhere;min-width:0}
+@media(max-width:900px){
+ .ui-refined .canvas-layout{grid-template-areas:"terms" "editor" "map";grid-template-rows:auto;grid-template-columns:minmax(0,1fr)}
+ .canvas-layout .edge-panel :is(select,input){width:100%;min-width:0}
+}
 </style>
 
 <style>
@@ -1043,15 +1155,15 @@ body{font-family:var(--sans);color:var(--ink);background:var(--bg)}button,input,
 <script>
 (()=>{
  const benchWelcome=document.querySelector('.home-welcome');
- benchWelcome.querySelector('.home-eyebrow').textContent='YOUR STUDY WORK, AUTOMATED';
- benchWelcome.querySelector('h2').outerHTML='<h1 class="hero-title">Your coursework,<br><em>automated.</em></h1>';
- benchWelcome.querySelector('p').textContent='One upload. Organized notes, evidence you can trace, and references your whole group can use.';
- benchWelcome.querySelector('[data-action="intake"]').innerHTML='Upload & automate '+icon('upload');
- $('home-tour').textContent='Show me around →';
- benchWelcome.querySelector('.home-tags').innerHTML='<span>'+icon('evidence')+'Study notes</span><span>'+icon('link')+'Evidence cards</span><span>'+icon('folder')+'References</span>';
- benchWelcome.querySelector('.automation-expectation').textContent='The workflow runs automatically. Keep this page open while it works.';
+ const tourButton=$('home-tour');
+ benchWelcome.innerHTML='<h2 class="hero-title">Upload a course file</h2><p>Turn a lecture or reading into study notes, quotations linked to the source and a reference for your group.</p><div class="home-actions"><button type="button" class="text-btn" id="home-restore-backup">Restore a backup</button></div>';
+ $('home-restore-backup').onclick=()=>openWorkspaceImportDialog();
+ tourButton.textContent='Take a quick tour';
+ benchWelcome.querySelector('.home-actions').append(tourButton);
+ const overviewHeading=document.querySelector('.home-heading');
+ overviewHeading.innerHTML='<h1>Study workspace</h1><button class="outline-btn home-add-material" data-action="intake">'+icon('upload')+' Add material</button>';
  const benchUploader=document.querySelector('.home-journey');
- benchUploader.innerHTML='<div class="launch-header"><h2>Start with your material</h2><span>YOUR AUTOMATION STARTS HERE</span></div><div class="launch-course"><label for="home-project">Course / project <span>· optional</span></label><input id="home-project" placeholder="e.g. Finance 101" maxlength="120"></div><div class="home-upload-zone" id="home-upload-zone"><div class="file-art" aria-hidden="true"><span>PPTX</span><span>TXT</span><span>PDF</span></div><strong>Drop a file. We’ll take it from here.</strong><p>PDF, PowerPoint, TXT or Markdown</p><button class="browse-files" id="browse-course-files">Choose files '+icon('arrow')+'</button><input type="file" id="home-upload-files" accept=".pdf,.pptx,.txt,.md" multiple hidden></div><div class="launch-formats"><span>Up to 50 MB per file</span><span>300 pages / slides</span></div><p class="home-upload-disclosure">'+icon('link')+'<span>Files, extracted text and completed outputs are shared with this group.</span></p>';
+ benchUploader.innerHTML='<div class="home-upload-zone" id="home-upload-zone"><div class="file-art" aria-hidden="true"><span>PPTX</span><span>TXT</span><span>PDF</span></div><button class="browse-files" id="browse-course-files">'+icon('upload')+' Choose files</button><p>Or drop PDF, PPTX, TXT or Markdown files here.</p><small>Up to 50 MB and 300 pages or slides per file</small><input type="file" id="home-upload-files" accept=".pdf,.pptx,.txt,.md" multiple hidden></div><div class="launch-course"><label for="home-project">Course or project <span>(optional)</span></label><input id="home-project" placeholder="e.g. Finance 101" maxlength="120"></div><p class="home-upload-disclosure">'+icon('link')+'<span>Your group can open the original files and the finished learning packs. Keep this tab open during upload and processing.</span></p>';
  $('browse-course-files').onclick=()=>$('home-upload-files').click();
  const benchStart=files=>{const project=$('home-project').value.trim();$('intake-project').value=project||'General';openIntake();enqueueFiles(files);};
  $('home-upload-files').onchange=e=>{benchStart(Array.from(e.target.files));e.target.value='';};
@@ -1087,6 +1199,88 @@ body{font-family:var(--sans);color:var(--ink);background:var(--bg)}button,input,
 @media(prefers-reduced-motion:reduce){.learning-output-card{transition:none}.learning-output-card:hover{transform:none}}
 
 .revision-another-concept{display:flex;gap:14px;align-items:center;margin-top:18px;padding-top:18px;border-top:1px solid #d9cce6}.revision-another-concept>div{flex:1;min-width:0}.revision-another-concept label{font-size:10px;font-weight:700;color:#6f4d89;margin-bottom:7px}.revision-another-concept input{background:#fffefa;border-color:#cbb7df}.revision-another-concept p{font-size:10px!important;margin:7px 0 0!important}.revision-another-concept .primary{min-height:43px;white-space:normal}@media(max-width:720px){.revision-another-concept{display:block}.revision-another-concept .primary{width:100%;margin-top:12px}}
+/* Home has one upload surface for a new group, then the active material and its pack. */
+#studio-overview [hidden]{display:none!important}
+#studio-overview>.home-heading{margin:0 0 20px}
+#studio-overview .home-add-material{display:inline-flex;align-items:center;gap:8px;min-height:40px;flex:none}
+#studio-overview .home-add-material svg{width:16px;height:16px}
+#studio-overview>.home-hero{margin:0 0 18px;padding:clamp(24px,3.1vw,46px);grid-template-columns:minmax(0,1fr) minmax(285px,1fr);gap:clamp(22px,4vw,62px);background:#f1eef9;border:1px solid #ded9ed;border-radius:18px}
+#studio-overview>.home-hero:before{display:none}
+#studio-overview .home-welcome .hero-title{max-width:10em;margin:0 0 15px;font:500 clamp(34px,3.1vw,50px)/1.07 var(--serif);letter-spacing:-1.5px;color:#28243d}
+#studio-overview .home-welcome>p{font-size:15px;color:#5b5770;line-height:1.65;max-width:31em}
+#studio-overview .home-welcome .home-actions{margin-top:14px}
+#studio-overview .home-welcome .text-btn{color:#594596;font-size:13px;text-decoration:underline;text-underline-offset:4px}
+#studio-overview .home-journey{padding:18px!important;border-radius:12px!important;box-shadow:0 3px 16px #32235309}
+#studio-overview .home-upload-zone{padding:12px 15px 16px;border-color:#a99acb;background:#f8f6fd}
+#studio-overview .home-upload-zone.dragover{background:#e9e1fa;border-color:#6950ac}
+#studio-overview .home-upload-zone .browse-files{font-size:14px;min-height:44px;padding:10px 23px}
+#studio-overview .home-upload-zone .browse-files svg{width:16px;height:16px}
+#studio-overview .home-upload-zone p{font-size:12px;color:#615c77;margin:10px 0 1px}
+#studio-overview .home-upload-zone small{font:12px/1.5 var(--sans);color:#716d81}
+#studio-overview .launch-course{margin:14px 0 10px}
+#studio-overview .launch-course label{font-size:12px;color:#505466}
+#studio-overview .launch-course label span{color:#6d7382}
+#studio-overview .launch-course input{font-size:13px;min-height:39px}
+#studio-overview .home-upload-disclosure{font-size:12px;line-height:1.55;color:#62677a;gap:7px}
+#studio-overview .home-upload-disclosure svg{width:14px;height:14px;flex:none;margin-top:2px}
+#learning-path>.learning-path-head{padding:24px 26px;background:#f4f1fa;border-color:#e7e0ee}
+#learning-path .learning-path-head .learning-eyebrow{margin-bottom:6px;color:#6c607d;font-size:12px;font-weight:600;letter-spacing:0}
+#learning-path .learning-path-head h2{font:650 clamp(21px,2vw,29px)/1.25 var(--sans);letter-spacing:-.65px;color:#302e43;overflow-wrap:anywhere}
+#learning-path .learning-selector label{display:block;color:#675e77;font-size:12px;letter-spacing:0}
+#learning-path .learning-selector select{color:#3e3c51;background:#fff;border-color:#d8d2e3}
+#learning-path>.learning-output-label{padding:22px 26px 0;font:650 16px/1.4 var(--sans);letter-spacing:0;color:#34384e}
+#learning-path .learning-output-grid{gap:12px;padding:12px 26px 22px}
+#learning-path .learning-output-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;align-items:center;padding:16px;background:#f7f4fc;border-color:#e1daee;box-shadow:none}
+#learning-path .learning-output-card:nth-child(2){background:#f1f7f3;border-color:#d7e5db}
+#learning-path .learning-output-card:nth-child(3){background:#fbf7ee;border-color:#e9dfc9}
+#learning-path .learning-output-card strong{grid-column:1;font-size:15px;color:#373a50;line-height:1.4}
+#learning-path .learning-output-card strong svg{width:17px;height:17px;padding:0;border-radius:0;background:none;flex:none;color:#7158a8}
+#learning-path .learning-output-card:nth-child(2) svg{color:#477a59}
+#learning-path .learning-output-card:nth-child(3) svg{color:#8f6f35}
+#learning-path .learning-output-card small{grid-column:1;margin:0;font-size:12px;color:#65687b}
+#learning-path .learning-output-card em{grid-area:1/2/3/3;margin:0;align-self:center;color:#636178;font-size:16px}
+#learning-path .learning-output-card:hover{border-color:#9385b0}
+#learning-path .learning-revision-launch{padding:19px 26px;gap:18px;background:#faf9fc;border-block:1px solid #ebe8ef}
+#learning-path .learning-revision-launch h3{margin:0 0 4px!important;font:650 17px/1.4 var(--sans)!important;letter-spacing:-.25px;color:#35374c}
+#learning-path .learning-revision-launch p{color:#64697b;font-size:13px;line-height:1.55}
+#learning-path .material-practice-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#learning-path .material-practice-actions button{max-width:none;min-height:42px;margin:0;font-size:13px;padding:10px 14px}
+#studio-overview .home-library{margin-top:24px}
+#studio-overview .home-lower{margin:0 0 16px;grid-template-columns:repeat(2,minmax(0,1fr))}
+#studio-overview .home-panel{min-width:0}
+#studio-overview .home-list-row{display:flex;box-sizing:border-box;width:100%;min-width:0;margin:0;text-align:left;background:transparent;border-radius:0;min-height:45px}
+#studio-overview .home-list-copy{flex:1;min-width:0;white-space:normal}
+#studio-overview .home-list-copy strong{color:#42495e;font-weight:600;overflow-wrap:anywhere}
+#studio-overview .home-list-copy small,#studio-overview .home-list-row>span:last-child{color:#687287}
+#studio-overview .home-list-row:hover .home-list-copy strong{text-decoration:underline;text-underline-offset:3px}
+#studio-overview .home-empty{display:block;background:none;border:0;padding:8px 0;color:#71778a;font-size:13px}
+@media(max-width:1120px){
+ #learning-path .learning-revision-launch{grid-template-columns:1fr;gap:13px}
+}
+@media(max-width:900px){
+ #studio-overview>.home-hero{padding:23px;gap:22px}
+}
+@media(max-width:720px){
+ #studio-overview>.home-heading{align-items:center;gap:12px;margin-bottom:16px}
+ #studio-overview .home-heading h1{font-size:26px;line-height:1.18}
+ #studio-overview .home-add-material{font-size:12px;padding:8px 10px}
+ #studio-overview>.home-hero{padding:20px 16px;grid-template-columns:minmax(0,1fr);gap:13px}
+ #studio-overview .home-welcome{padding:0 4px!important}
+ #studio-overview .home-welcome .hero-title{font-size:33px;max-width:none;margin-bottom:8px}
+ #studio-overview .home-welcome>p{font-size:14px}
+ #studio-overview .home-welcome .home-actions{margin-top:3px}
+ #studio-overview .home-lower{grid-template-columns:minmax(0,1fr)}
+ #studio-overview .home-journey{padding:13px!important}
+ #studio-overview .file-art{height:48px;margin-bottom:9px}
+ #studio-overview .file-art>span{height:39px;width:31px}
+ #learning-path>.learning-path-head{padding:18px}
+ #learning-path>.learning-output-label{padding:18px 18px 0}
+ #learning-path .learning-output-grid{padding:12px 18px 18px;gap:8px}
+ #learning-path .learning-output-card{padding:12px 14px;gap:2px 8px}
+ #learning-path .learning-path-head h2{font-size:21px}
+ #learning-path .learning-revision-launch{display:grid;padding:18px}
+ #learning-path .material-practice-actions button{flex:1 1 155px;width:auto}
+}
 </style>
 <script>
 function learningSource(){
@@ -1119,9 +1313,7 @@ function selectLearningSource(id){
 }
 function learningOpenPack(section){
  const job=learningPack();if(!job)return toast('This material has no automated learning pack. You can still practice with its source text.');
- openIntake();showPack(job.id);
- const anchor=[...$('learning-pack').querySelectorAll('[data-pack-anchor]')].find(heading=>heading.dataset.packAnchor===section);
- if(anchor)requestAnimationFrame(()=>anchor.scrollIntoView({block:'start',behavior:'smooth'}));
+ showPack(job.id,section);
 }
 function learningGo(task,fields={},parent=null){
  if(busy)return toast('Wait for this task to finish.');
@@ -1240,30 +1432,33 @@ function renderLearningPath(){
  if(!$('studio-overview'))return;
  document.body.classList.add('learning-flow-active');
  const source=learningSource(),job=learningPack(),records=learningRecords(),scoped=records.filter(r=>r.workflow?.source_id===source?.id),reflection=records.filter(r=>r.reflection).at(-1),last=records.at(-1),disabled=busy?' disabled':'';
- let home=$('learning-path');if(!home){home=document.createElement('section');home.id='learning-path';home.setAttribute('aria-label','Material learning workspace');$('learning-upload-drawer').after(home);}
- const hadSource=document.body.classList.contains('learning-has-source');if(hadSource!==Boolean(source))$('learning-upload-drawer').open=!source;document.body.classList.toggle('learning-has-source',Boolean(source));
- if(source)$('learning-upload-drawer').before(home);else $('learning-upload-drawer').after(home);
+ let home=$('learning-path');if(!home){home=document.createElement('section');home.id='learning-path';home.setAttribute('aria-label','Current material');document.querySelector('.home-hero').after(home);}
+ document.body.classList.toggle('learning-has-source',Boolean(source));
+ document.querySelector('.home-hero').hidden=Boolean(source);
+ document.querySelector('.home-add-material').hidden=!source;
+ document.querySelector('.home-library').hidden=!state.sources.length&&!state.history.length;
  let bar=$('learning-tool-context');if(!bar){bar=document.createElement('section');bar.id='learning-tool-context';bar.className='learning-tool-context';bar.setAttribute('aria-label','Current learning material');document.querySelector('.content>.intro').before(bar);}
- const picker=(id)=>'<label for="'+id+'">CURRENT MATERIAL</label><select id="'+id+'" data-learning-source-select'+disabled+'>'+state.sources.slice().reverse().map(s=>'<option value="'+esc(s.id)+'" '+(s.id===source?.id?'selected':'')+'>'+esc(s.title)+'</option>').join('')+'</select>';
+ const picker=(id,label='Current material')=>'<label for="'+id+'">'+label+'</label><select id="'+id+'" data-learning-source-select'+disabled+'>'+state.sources.slice().reverse().map(s=>'<option value="'+esc(s.id)+'" '+(s.id===source?.id?'selected':'')+'>'+esc(s.title)+'</option>').join('')+'</select>';
  const focus=document.activeElement?.id==='learning-goal-input'?{sourceId:document.activeElement.dataset.goalSource,start:document.activeElement.selectionStart,end:document.activeElement.selectionEnd}:null;
  if(focus){state.learningGoalDrafts=state.learningGoalDrafts||{};state.learningGoalDrafts[focus.sourceId]=$('learning-goal-input').value;}
- if(!source){home.innerHTML='<div class="learning-empty learning-no-source"><div><div class="learning-eyebrow">ONE MATERIAL. ONE LEARNING PATH.</div><h3>Start with the material you want to understand.</h3><p>Upload → automatic notes, evidence and references → focused practice → a shared record your group can return to.</p></div><button class="primary" data-action="intake">Upload your first material '+icon('arrow')+'</button></div>';bar.innerHTML='<div><strong>Choose the source before the tool.</strong><p>Upload your material to start a traceable learning path.</p></div><button class="primary" data-action="intake">Upload material '+icon('upload')+'</button>';}
+ if(!source){home.replaceChildren();bar.innerHTML='<div><strong>Add a course material</strong><p>This exercise uses the source you select.</p></div><button class="primary" data-action="intake">Upload material '+icon('upload')+'</button>';}
  else{
   const draft=Object.prototype.hasOwnProperty.call(state.learningGoalDrafts||{},source.id)?state.learningGoalDrafts[source.id]:source.learning_goal||'';
   const otherTasksOpen=Boolean(home.querySelector('.learning-alternate-tasks')?.open),detailsOpen=Boolean(home.querySelector('.learning-material-details')?.open),goalOpen=Boolean(focus||$('learning-goal-settings')?.open);
   const stages=[['Original','Source text available',true],['Auto pack',job?job.pack.sections.length+' note sections · '+job.pack.cards.length+' cards':'No automated pack retained',!!job],['Practice',scoped.length?scoped.length+' focused runs saved':'Explain one idea',false],['Shared record',reflection?'Your revision saved':scoped.length?'Completed results shared':'Save a result your group can revisit',!!reflection||!!scoped.length]];
-  const outputs=job?'<div class="learning-output-label">AUTOMATICALLY PREPARED FROM YOUR UPLOAD</div><div class="learning-output-grid" aria-label="Automatically generated outputs">'+[
-   ['notes','Study notes',job.pack.sections.length+' note sections','Understand the material in source order.','Read notes','evidence'],
-   ['cards','Evidence cards',job.pack.cards.length+' original quotations','Keep the wording and return to its source.','Inspect cards','link'],
-   ['reference','Source reference',job.pack.reference?.apa?'APA entry available':'Known fields · missing details marked','Reuse the available citation information.','Check details','folder']
-  ].map(([key,title,count,why,action,ico])=>'<button class="learning-output-card" data-learning-action="open-pack" data-pack-section="'+key+'"'+disabled+'><strong>'+icon(ico)+title+'</strong><small>'+esc(count)+'</small><span>'+why+'</span><em>'+action+' ↗</em></button>').join('')+'</div>':'<p class="learning-outcome-empty">This text source is ready for practice. Upload a file to generate notes, evidence cards and a source reference automatically.</p>';
+  const outputs=job?'<h3 class="learning-output-label">Learning pack</h3><div class="learning-output-grid" aria-label="Learning pack">'+[
+   ['notes','Study notes',job.pack.sections.length+(job.pack.sections.length===1?' section':' sections'),'evidence'],
+   ['cards','Evidence cards',job.pack.cards.length+(job.pack.cards.length===1?' source quotation':' source quotations'),'link'],
+   ['reference','Source reference',job.pack.reference?.apa?'APA entry':'Available citation details','folder']
+  ].map(([key,title,count,ico])=>'<button class="learning-output-card" data-learning-action="open-pack" data-pack-section="'+key+'"'+disabled+'><strong>'+icon(ico)+title+'</strong><small>'+esc(count)+'</small><em aria-hidden="true">→</em></button>').join('')+'</div>':'';
   const tasks=[['evidence','Check a claim','A claim → supporting passages, challenges and gaps.','evidence'],['requirements','Check my draft','Assignment brief + draft → requirements needing attention.','requirements'],['reconstruction','Connect ideas','Concepts + your relationships → a source-grounded concept map.','nodes'],['methods','Review my research plan','Your study design + method → conditions to address and details to clarify.','compass'],['recipe','Plan a replication','Original methods passage → steps, parameters and missing details.','recipe'],['versions','Review source changes','Old + new source + notes → changes and affected notes.','versions'],['repair','Find a quotation','Exact original words → matches and surrounding text.','search']];
   const goal='<details class="learning-goal-settings" id="learning-goal-settings"'+(goalOpen?' open':'')+'><summary>Optional: set a shared learning goal</summary><div><div class="learning-goal-field"><label for="learning-goal-input">WHAT DOES YOUR GROUP WANT TO UNDERSTAND?</label><textarea id="learning-goal-input" data-goal-source="'+esc(source.id)+'" rows="3" placeholder="One question your group wants to return to"'+disabled+'>'+esc(draft)+'</textarea><div class="learning-goal-actions"><button class="outline-btn" data-learning-action="save-goal"'+disabled+'>Save goal to group</button><span class="learning-private-note">Draft stays local until saved.</span></div></div></div></details>';
   const outcomes=records.length?'<section class="learning-outcome"><div class="learning-outcome-head"><div><div class="learning-eyebrow">RETURN TO YOUR GROUP’S WORK</div><h3>Saved practice for this material</h3></div><button class="outline-btn" data-learning-action="export-brief"'+disabled+'>Export learning brief '+icon('download')+'</button></div>'+(reflection?'<blockquote class="learning-reflection"><p>'+esc(reflection.reflection)+'</p><small>Saved revision · '+esc(reflection.reflection_author||reflection.author||'Group member')+'</small></blockquote>':'')+'<div class="learning-records">'+records.slice(-4).reverse().map(r=>'<div class="learning-record"><button data-learning-record-open="'+esc(r.id)+'"'+disabled+'>'+esc(r.result?.title||META[r.task]?.[0]||r.task)+'<small>'+esc(META[r.task]?.[0]||r.task)+' · '+esc(r.author||'Group member')+(learningLegacyLabel(r)?' · '+esc(learningLegacyLabel(r)):'')+'</small></button><span>'+esc(new Date(r.at).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}))+' ↗</span></div>').join('')+'</div>'+(records.some(r=>!r.workflow?.source_id)?'<p class="learning-legacy-note">Earlier group-library records may use other materials; they have not been relabelled as focused runs.</p>':'')+'</section>':'';
-  home.innerHTML='<header class="learning-path-head"><div><div class="learning-eyebrow">YOUR MATERIAL · SHARED WITH YOUR GROUP</div><h2>'+esc(source.title)+'</h2></div><div class="learning-selector">'+picker('learning-source-select')+'</div></header>'+
-   '<section class="learning-revision-launch"><div><div class="learning-eyebrow">START HERE · YOUR NEXT USEFUL STEP</div><h3>Check one idea you want to understand.</h3><p>Write your explanation → get feedback → check the original → save your own correction.</p></div><button class="primary" id="learning-revision-start" data-learning-action="start-revision"'+disabled+'>Check my understanding '+icon('arrow')+'</button></section>'+outputs+'<div class="learning-source-actions" style="padding:0 29px 20px"><button class="outline-btn" data-learning-action="open-mcq"'+disabled+'>Practice with MCQs '+icon('arrow')+'</button><span class="learning-private-note">Choose knowledge points, answer, then inspect explanations and source pages.</span></div>'+
+  const continuing=Boolean(state.revisionGuides?.[source.id]?.question);
+  home.innerHTML='<header class="learning-path-head"><div><div class="learning-eyebrow">Current material</div><h2>'+esc(source.title)+'</h2></div>'+(state.sources.length>1?'<div class="learning-selector">'+picker('learning-source-select','Switch material')+'</div>':'')+'</header>'+outputs+
+   '<section class="learning-revision-launch"><div><h3>Practice</h3><p>Explain a concept in your own words or quiz yourself on this material.</p></div><div class="material-practice-actions"><button class="primary" id="learning-revision-start" data-learning-action="start-revision"'+disabled+'>'+(continuing?'Continue my explanation':'Check my understanding')+' '+icon('arrow')+'</button><button class="outline-btn" data-learning-action="open-mcq"'+disabled+'>Practice with MCQs</button></div></section>'+
    '<details class="learning-material-details"'+(detailsOpen?' open':'')+'><summary>Original file & processing details</summary><ol class="learning-stages">'+stages.map(([title,note,ready],i)=>'<li class="learning-stage '+(ready?'ready':i===2?'current':'')+'"><span class="learning-stage-dot">'+(ready?'✓':String(i+1).padStart(2,'0'))+'</span><div><strong>'+title+'</strong><small>'+esc(note)+'</small></div></li>').join('')+'</ol><div class="learning-source-actions"><button data-learning-action="read-source"'+disabled+'>Read original text ↗</button>'+(job?'<button data-learning-action="open-pack"'+disabled+'>Open complete learning pack ↗</button>':'')+'<span class="learning-source-count">'+esc(source.id)+' · '+records.length+' practice records</span></div></details>'+
-   '<details class="learning-alternate-tasks"'+(otherTasksOpen?' open':'')+'><summary>Need a different result? Choose another task</summary><div class="learning-goal-choices">'+tasks.map(([task,title,copy,ico])=>'<button class="learning-start" data-learning-start="'+task+'"'+disabled+'><strong>'+icon(ico)+title+'</strong><span>'+copy+'</span><small>Open this task →</small></button>').join('')+'</div>'+goal+'</details>'+outcomes;
+   '<details class="learning-alternate-tasks"'+(otherTasksOpen?' open':'')+'><summary>More practice and research tools</summary><div class="learning-goal-choices">'+tasks.map(([task,title,copy,ico])=>'<button class="learning-start" data-learning-start="'+task+'"'+disabled+'><strong>'+icon(ico)+title+'</strong><span>'+copy+'</span></button>').join('')+'</div>'+goal+'</details>'+outcomes;
   const parent=(!state.learningParentTarget||state.learningParentTarget===active)?state.history.find(r=>r.id===state.learningParentRunId):null;
   bar.innerHTML='<div><strong>'+esc(source.title)+'</strong><p>'+(source.learning_goal?'Goal: '+esc(source.learning_goal):'This task uses only this selected material.')+'</p>'+(parent?'<p class="learning-parent-note">Continuing from '+esc(META[parent.task]?.[0]||parent.task)+' · '+esc(parent.id.slice(0,8))+'</p>':'')+'</div><div>'+picker('learning-tool-source')+'</div><button class="outline-btn" data-learning-action="workspace"'+disabled+'>Back to material workspace →</button>';
  }
@@ -1274,7 +1469,6 @@ function renderLearningPath(){
  if(matchMedia('(min-width:901px)').matches&&$('revision-nav-advanced'))$('revision-nav-advanced').open=true;
  document.querySelector('.nav-caption')?.replaceChildren(document.createTextNode('START WITH A TASK'));
  if($('dock-counter'))$('dock-counter').textContent='MATERIAL PRACTICE';
- document.querySelector('.home-heading h1')?.replaceChildren(document.createTextNode('Your learning workspace'));
  const prior=$('learning-next-step');if(prior)prior.remove();
  if(latest&&source&&records.some(r=>r.id===latest.id)&&!$('result-section').classList.contains('hidden')&&!busy){const next=document.createElement('section');next.id='learning-next-step';next.className='learning-next-step';const options=learningContinuation(latest);next.innerHTML='<h3>Continue the same line of work.</h3><p>This result stays linked to '+esc(source.title)+'. Pick a related next step, or return to the material workspace.</p><div class="learning-next-actions">'+options.map((o,i)=>'<button class="'+(i===0?'primary':'outline-btn')+'" data-learning-continue="'+o.task+'" data-learning-record="'+esc(latest.id)+'">'+o.title+' →</button>').join('')+'<button class="outline-btn" data-learning-action="workspace">Material workspace</button></div><p class="learning-handoff-note">Existing drafts are kept. A next step opens its real tool; it does not run AI automatically.</p>';if(learningLegacyLabel(latest))next.insertAdjacentHTML('beforeend','<p class="learning-legacy-note">'+esc(learningLegacyLabel(latest))+'. A new continuation will use only the selected material.</p>');$('result-content').append(next);}
  renderLearningRevisionGuide();
@@ -1314,8 +1508,7 @@ document.addEventListener('click',event=>{
 });
 // The selected source's top-level forms are the newest local copy after reload.
 // Invalid/deleted selections are reset by learningSource without reassigning their drafts.
-const uploadDrawer=document.createElement('details');uploadDrawer.id='learning-upload-drawer';uploadDrawer.className='learning-supplement';uploadDrawer.open=!learningSource();uploadDrawer.innerHTML='<summary>Add a material · start the automatic workflow</summary>';document.querySelector('.home-hero').before(uploadDrawer);uploadDrawer.append(document.querySelector('.home-hero'));
-const libraryDrawer=document.createElement('details');libraryDrawer.className='learning-supplement';libraryDrawer.innerHTML='<summary>Browse the group library and earlier activity</summary>';document.querySelector('.home-stats').before(libraryDrawer);libraryDrawer.append(document.querySelector('.home-stats'),document.querySelector('.home-lower'));
+const homeLibrary=document.createElement('section');homeLibrary.className='home-library';homeLibrary.setAttribute('aria-label','Group library');document.querySelector('.home-stats').before(homeLibrary);homeLibrary.append(document.querySelector('.home-lower'),document.querySelector('.home-stats'));
 learningSource();render();renderLearningPath();
 </script>
 
@@ -1408,7 +1601,7 @@ function renderSessionEvidence(){
  let entry=$('session-evidence-entry');if(!source){entry?.remove();return;}
  if(!entry){entry=document.createElement('section');entry.id='session-evidence-entry';entry.className='session-evidence';entry.setAttribute('aria-label','Student-recorded study sessions');}path.after(entry);
  const records=sessionEvidenceRecords(source.id);
- entry.innerHTML='<div class="session-evidence-head"><div><div class="session-evidence-kicker">YOUR EXPERIENCE, IN YOUR WORDS</div><h3>What happened when you used it?</h3><p>Keep your actual task, any measured time and corrections together. These records help your group compare experiences across days.</p></div><button type="button" class="primary" data-session-action="open">Record this study session →</button></div><div class="session-evidence-actions"><span>'+records.length+' student-recorded '+(records.length===1?'session':'sessions')+' · '+esc(source.title)+'</span>'+(records.length?'<button type="button" data-session-action="export">Export factual records JSON ↗</button>':'')+'</div>'+(records.length?'<ul class="session-evidence-recent">'+records.slice(-2).reverse().map(record=>'<li><button type="button" data-session-action="view"><strong>'+esc(record.input.task)+'</strong></button><small>'+esc(record.input.session_date)+' · '+esc(record.author)+'</small></li>').join('')+'</ul>':'');
+ entry.innerHTML='<div class="session-evidence-head"><div><h3>Study log</h3><p>Record what you worked on, how long it took and what you corrected.</p></div><button type="button" class="primary" data-session-action="open">Record this study session →</button></div><div class="session-evidence-actions"><span>'+records.length+' recorded '+(records.length===1?'session':'sessions')+' for this material</span>'+(records.length?'<button type="button" data-session-action="export">Export factual records JSON ↗</button>':'')+'</div>'+(records.length?'<ul class="session-evidence-recent">'+records.slice(-2).reverse().map(record=>'<li><button type="button" data-session-action="view"><strong>'+esc(record.input.task)+'</strong></button><small>'+esc(record.input.session_date)+' · '+esc(record.author)+'</small></li>').join('')+'</ul>':'');
  if($('session-evidence-modal').open)sessionEvidenceSavedHTML($('session-evidence-modal').dataset.sourceId);
 }
 function openSessionEvidence(viewSaved=false){
@@ -1455,7 +1648,10 @@ document.addEventListener('click',event=>{
  const button=event.target.closest('[data-revise-source]');if(!button)return;
  if(busy)return toast('Wait for the current task to finish.');
  if(!state.sources.some(source=>source.id===button.dataset.reviseSource))return toast('This material was removed. Add it back before starting a new revision task.');
- selectLearningSource(button.dataset.reviseSource);button.closest('dialog')?.close();learningBeginRevision();
+ selectLearningSource(button.dataset.reviseSource);
+ button.closest('dialog')?.close();
+ if($('intake-modal').open)$('intake-modal').close();
+ learningBeginRevision();
 });
 if(displayRefreshRequested)setTimeout(()=>toast('Display refreshed. Your materials, drafts and shared history were kept.'),300);
 </script>
@@ -1730,11 +1926,50 @@ body.ui-refined{
 @media(max-width:600px){.ui-refined .method-route{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:0;background:transparent;border:0}.ui-refined .method-arrow{display:none}.ui-refined .method-stop{padding:13px 10px}.ui-refined .method-stop h3{font-size:13px;margin-bottom:0}.ui-refined .method-stop small{font-size:8px;letter-spacing:.5px}.ui-refined .method-stop p{display:none}}
 @media(max-width:390px){.ui-refined .learning-tool-help{grid-template-columns:1fr;gap:10px}.ui-refined .dock-copy,.ui-refined .action-dock .dock-copy{max-width:105px}.ui-refined .dock-actions .primary{max-width:175px;font-size:10px;padding:10px}.ui-refined .learning-output-card em{grid-column:1;grid-row:auto;margin-top:10px}.ui-refined .revision-another-concept{flex-wrap:wrap}.ui-refined .revision-another-concept .primary{width:100%}}
 @media(prefers-reduced-motion:reduce){.ui-refined *{scroll-behavior:auto!important}.ui-refined :is(.primary,.outline-btn,.learning-output-card,.learning-start){transition:none;transform:none!important}}
+.mobile-tasks-toggle{display:none}
+.ui-refined .sync-label.failed{background:#faeae6;color:#984a3d}
+@media(max-width:900px){
+ body.ui-refined .sidebar{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0 14px;padding:10px 18px}
+ .ui-refined .sidebar .brand{min-height:42px;width:max-content}
+ .ui-refined .sidebar .mobile-tasks-toggle{display:inline-flex;align-items:center;justify-content:center;gap:10px;grid-column:2;grid-row:1;min-height:42px;padding:6px 13px;color:#f4f1ff;font-size:13px;font-weight:600;border:1px solid #545c79;border-radius:9px}
+ .mobile-tasks-toggle::after{content:"";width:7px;height:7px;border-right:1.5px solid;border-bottom:1.5px solid;transform:translateY(-2px) rotate(45deg)}
+ .mobile-tasks-toggle[aria-expanded=true]::after{transform:translateY(2px) rotate(225deg)}
+ body.ui-refined .sidebar .tool-nav,body.ui-refined .sidebar .home-overview-link{display:none}
+ body.ui-refined .sidebar.mobile-tools-open .home-overview-link{display:flex;grid-column:1/-1;position:static;margin:12px 0 0;min-height:39px;font-size:13px}
+ body.ui-refined .sidebar.mobile-tools-open .tool-nav{display:block;grid-column:1/-1;margin:4px 0 0;padding:0}
+ .ui-refined .sidebar .modal-help-link{grid-column:1/-1}
+ .ui-refined .topbar{height:46px}
+ .ui-refined .groupbar{row-gap:1px}
+ .ui-refined .groupbar-actions .text-btn{color:#4f5373;font-weight:550}
+}
 </style>
 <script>
 document.body.classList.add('ui-refined');
 const refinedMobile=matchMedia('(max-width:900px)');
-const sizeRefinedNav=()=>{const tasks=document.getElementById('revision-nav-advanced');if(tasks)tasks.open=!refinedMobile.matches;};
+const studioSidebar=document.querySelector('.sidebar');
+const taskMenuButton=document.createElement('button');
+taskMenuButton.type='button';
+taskMenuButton.className='mobile-tasks-toggle';
+taskMenuButton.setAttribute('aria-controls','tool-nav');
+taskMenuButton.textContent='Tasks';
+studioSidebar.querySelector('.brand').after(taskMenuButton);
+function setTaskMenu(open){
+ studioSidebar.classList.toggle('mobile-tools-open',open);
+ taskMenuButton.setAttribute('aria-expanded',String(open));
+ const more=document.getElementById('revision-nav-advanced');
+ if(more)more.open=open||!refinedMobile.matches;
+}
+const sizeRefinedNav=()=>setTaskMenu(false);
+taskMenuButton.addEventListener('click',()=>setTaskMenu(taskMenuButton.getAttribute('aria-expanded')!=='true'));
+studioSidebar.addEventListener('click',event=>{
+ if(refinedMobile.matches&&event.target.closest('[data-go],.brand,.home-overview-link'))setTaskMenu(false);
+});
+studioSidebar.addEventListener('keydown',event=>{
+ if(event.key==='Escape'&&taskMenuButton.getAttribute('aria-expanded')==='true'){
+  setTaskMenu(false);
+  taskMenuButton.focus();
+ }
+});
 refinedMobile.addEventListener('change',sizeRefinedNav);sizeRefinedNav();
 const refinedDock=document.getElementById('tool-dock');
 if(refinedDock){
@@ -1833,6 +2068,64 @@ body.ui-refined .pack-section p{font:14px/1.85 var(--sans);color:#606d84}
 body.ui-refined .pack-section .repair-hit{background:#fafbfe;border-color:#e5e9f1;padding:20px;border-radius:12px}
 body.ui-refined .pack-section .repair-hit blockquote{font:16px/1.8 Georgia,'Times New Roman',serif;color:#4d5670;margin:14px 0}
 body.ui-refined .pack-section .repair-hit small{font-size:12px;color:#778299}
+
+body.ui-refined #learning-pack{
+ width:min(780px,calc(100vw - 36px));max-height:min(830px,90dvh);
+ overflow:visible;color:#252c40;background:#fff;
+}
+#learning-pack[open]{display:flex;flex-direction:column}
+body.ui-refined #learning-pack .modal-head{
+ flex:none;position:static;justify-content:space-between;align-items:start;
+ padding:24px 30px 20px;border-radius:20px 20px 0 0;background:#f5f3fc;border-bottom:0;
+}
+#learning-pack .pack-heading{min-width:0}
+#learning-pack .pack-format{display:block;margin-bottom:4px;color:#6758a0;font-size:12px;font-weight:650}
+body.ui-refined #pack-title{
+ font:650 clamp(18px,2vw,24px)/1.35 var(--sans);color:#272640;letter-spacing:-.4px;
+ overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+#pack-meta{margin:5px 0 0;font-size:12px;color:#615c74;overflow-wrap:anywhere}
+#learning-pack .pack-sections{
+ flex:none;display:flex;gap:18px;padding:0 30px;background:#f5f3fc;
+ box-shadow:inset 0 -1px #dedbe9;
+}
+#learning-pack .pack-sections button{
+ padding:10px 2px 12px;color:#625c74;font-weight:560;font-size:14px;
+ border-bottom:3px solid transparent;border-radius:0;
+}
+#learning-pack .pack-sections button[aria-pressed=true]{border-color:#7058c3;color:#49348d;font-weight:700}
+#pack-page{
+ flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain;
+ padding:22px 30px 28px;scrollbar-gutter:stable;overflow-wrap:anywhere;
+}
+#pack-page h3{margin:0 0 8px;font:650 18px/1.45 var(--sans);color:#2f384b}
+#pack-page p{font-size:15px;line-height:1.75;color:#49536a}
+#pack-page .pack-note+.pack-note{margin-top:18px;padding-top:18px;border-top:1px solid #e6e8ef}
+#pack-page p.pack-translation{margin:7px 0 0;color:#687184;font-size:14px}
+#pack-page .pack-evidence{border:1px solid #d8e5df;border-left:3px solid #85a798;border-radius:9px;padding:16px 19px}
+#pack-page .pack-evidence+.pack-evidence{margin-top:12px}
+#pack-page .pack-evidence small{color:#3c695a;font-size:12px;font-weight:650}
+#pack-page blockquote{font:19px/1.55 Georgia,serif;color:#273e34;margin:9px 0}
+#pack-page .pack-evidence button{margin-top:12px}
+#pack-page .reference-citation{background:#faf7ee;border-color:#c6a35e}
+#pack-page .reference-fields{font-size:14px}
+#pack-page .pack-processing-notes{margin-top:22px;border-top:1px solid #e6e8ef;padding-top:12px;color:#626b7f;font-size:12px}
+#learning-pack summary{cursor:pointer}
+#learning-pack .pack-footer{flex:none;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 30px;border-top:1px solid #e4e6ed}
+#learning-pack .pack-exports{position:relative;color:#48536d;font-size:13px}
+#learning-pack .pack-exports summary{padding:10px}
+#learning-pack .pack-exports>div{position:absolute;z-index:3;right:0;bottom:100%;width:max-content;padding:5px;background:#fff;border:1px solid #d9dce5;border-radius:10px;box-shadow:0 6px 18px #2633561a}
+#learning-pack .pack-exports button{display:block;width:100%;text-align:left;padding:10px 13px;border-radius:6px}
+#learning-pack .pack-exports button:hover{background:#f0edf8}
+@media(max-width:600px){
+ body.ui-refined #learning-pack{width:calc(100% - 20px);max-height:94dvh;max-width:none}
+ body.ui-refined #learning-pack .modal-head{padding:16px 17px 10px}
+ #learning-pack .pack-sections{padding:0 17px;gap:15px}
+ #learning-pack .pack-sections button{font-size:13px;min-height:44px}
+ #pack-page{padding:17px;scrollbar-gutter:auto}
+ #learning-pack .pack-footer{padding:10px 15px}
+ #pack-page .pack-evidence{padding:14px}
+}
 
 /* Self-testing keeps a distinct, readable answer state. */
 body.ui-refined #mcq-dialog{width:min(940px,calc(100vw - 48px));max-width:940px}
